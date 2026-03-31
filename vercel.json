@@ -11,7 +11,7 @@
       "headers": [
         {
           "key": "Authorization",
-          "value": "Basic bGRuZWMtNWl3ZXotaHhjdGstNWdxbGMtZHFtN2E6bGRuZWMtNWl3ZXotaHhjdGstNWdxbGMtZHFtN2E="
+          "value": "Basic @USER_EMAIL:@API_TOKEN"
         }
       ]
     }
