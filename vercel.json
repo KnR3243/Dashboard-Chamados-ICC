@@ -11,7 +11,7 @@
       "headers": [
         {
           "key": "Authorization",
-          "value": "Basic @USER_EMAIL:@API_TOKEN"
+          "value": "@TOPDESK_AUTH"
         }
       ]
     }
