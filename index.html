@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>ICC - Chamados</title>
+    <link rel="icon" href="icone.png" type="image/x-icon">
+    <style>
+        :root {
+            --icc-light-green: #70b02a;
+            --icc-dark-green: #2b571e;
+            --glass-bg: rgba(18, 18, 18, 0.98); 
+            --st-novo: #00d2ff;
+            --st-atendimento: #2ecc71;
+            --st-espera: #f1a90f;
+            --st-pausado: #9b59b6;
+            --st-default: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('fundo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(to right, var(--icc-light-green), var(--icc-dark-green));
+            height: 90px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+        .header-left { display: flex; flex-direction: row; align-items: center; gap: 20px; }
+        .header-left img { height: 60px; filter: brightness(0) invert(1); object-fit: contain; }
+        .header-left h1 { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; margin: 0; white-space: nowrap; }
+        .header-right { text-align: right; }
+        #data-extenso { font-size: 1.1rem; font-weight: 400; text-transform: capitalize; opacity: 0.9; margin-bottom: 2px;}
+        #relogio { font-size: 2.8rem; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+        .grid-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 20px 25px; 
+            padding: 40px 30px 30px 30px;
+            overflow-y: auto;
+            align-items: start; 
+        }
+        .grid-container::-webkit-scrollbar { width: 8px; }
+        .grid-container::-webkit-scrollbar-thumb { background: var(--icc-light-green); border-radius: 10px; }
+        .card {
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-radius: 16px;
+            padding: 30px 20px 15px 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 160px; 
+            height: max-content; 
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+        }
+        .status-pill {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            padding: 6px 16px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+            z-index: 5;
+        }
+        .pill-novo { background: var(--st-novo); }
+        .pill-atendimento { background: var(--st-atendimento); }
+        .pill-espera { background: var(--st-espera); color: #000; }
+        .pill-pausado { background: var(--st-pausado); }
+        .pill-default { background: var(--st-default); color: #000; }
+        .ticket-id { font-size: 1.2rem; color: #ffffff; font-weight: 900; margin-bottom: 5px; }
+        .subject {
+            font-size: 1.4rem; 
+            font-weight: 800;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+            flex-grow: 1; 
+        }
+        .card-footer {
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .info-label { font-size: 0.7rem; color: #777; text-transform: uppercase; font-weight: 900; }
+        .info-val { font-size: 1.1rem; font-weight: 600; color: #ddd; margin-bottom: 5px; display: block; }
+        .val-operator { color: var(--icc-light-green); }
+        .live-pulse { animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { border-color: rgba(0, 210, 255, 0.1); }
+            50% { border-color: var(--st-novo); }
+            100% { border-color: rgba(0, 210, 255, 0.1); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <img src="logo.png" alt="Logo">
+        <h1>Chamados TopDesk</h1>
+    </div>
+    <div class="header-right">
+        <div id="data-extenso">...</div>
+        <div id="relogio">00:00:00</div>
+    </div>
+</header>
+
+<div class="grid-container" id="painel"></div>
+
+<script>
+    const headers = { 'Accept': 'application/json' };
+
+    function getStyles(status) {
+        const s = (status || "").toLowerCase();
+        if (s.includes('novo')) return { pill: 'pill-novo', color: '#00d2ff' };
+        if (s.includes('atendimento') || s.includes('andamento')) return { pill: 'pill-atendimento', color: '#2ecc71' };
+        if (s.includes('aguardando') || s.includes('fornecedor')) return { pill: 'pill-espera', color: '#f1a90f' };
+        if (s.includes('pausado')) return { pill: 'pill-pausado', color: '#9b59b6' };
+        return { pill: 'pill-default', color: '#7f8c8d' }; 
+    }
+
+    async function fetchData() {
+        let finalData = [];
+        try {
+            const res = await fetch('/api/topdesk/incidents?page_size=100', { headers });
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data)) finalData = [...data];
+            }
+        } catch (e) { console.error("Erro Incidentes"); }
+
+        try {
+            const resM = await fetch('/api/topdesk/operatorChanges', { headers });
+            if (resM.ok) {
+                const dataM = await resM.json();
+                const listM = Array.isArray(dataM) ? dataM : (dataM.results || []);
+                finalData = [...finalData, ...listM];
+            }
+        } catch (e) { console.error("Erro Mudanças"); }
+
+        render(finalData);
+    }
+
+    function render(lista) {
+        const painel = document.getElementById('painel');
+        if (!lista || lista.length === 0) return;
+        painel.innerHTML = lista
+            .filter(item => {
+                const isM = item.number && item.number.startsWith('M');
+                const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
+                if (s.includes('resolvido') || s.includes('fechado') || s.includes('fechada')) return false;
+                if (isM && !s.includes('novo') && !s.includes('andamento') && !s.includes('pausado')) return false;
+                return true;
+            })
+            .map(item => {
+                const isM = item.number && item.number.startsWith('M');
+                const idCurto = item.number.split('-').pop();
+                const statusName = isM ? (item.status?.name || "Novo") : (item.processingStatus?.name || "Novo");
+                const style = getStyles(statusName);
+                const textoPill = isM ? `MUDANÇAS: ${statusName.toUpperCase()}` : statusName.toUpperCase();
+                let opObj = item.operator || item.assignee || item.simple?.assignee || item.complex?.assignee;
+                let opName = opObj?.dynamicName || opObj?.name || "-";
+                if (opName.toUpperCase().includes("TI") || opName === "") opName = "-";
+                const solicitante = item.caller?.dynamicName || item.requester?.dynamicName || item.requestedBy?.dynamicName || "TI";
+
+                return `
+                    <div class="card ${statusName.toLowerCase().includes('novo') ? 'live-pulse' : ''}" style="border-color: ${style.color}">
+                        <div class="status-pill ${style.pill}">${textoPill}</div>
+                        <div class="ticket-id"># ${idCurto}</div>
+                        <div class="subject">${item.briefDescription || "Sem Assunto"}</div>
+                        <div class="card-footer">
+                            <span class="info-label">Solicitante</span>
+                            <span class="info-val">${solicitante}</span>
+                            <span class="info-label">Atendido por</span>
+                            <span class="info-val val-operator">${opName}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+    }
+
+    function clock() {
+        const agora = new Date();
+        const opt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const dataStr = agora.toLocaleDateString('pt-BR', opt);
+        document.getElementById('data-extenso').innerText = dataStr.charAt(0).toUpperCase() + dataStr.slice(1);
+        document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
+    }
+
+    setInterval(clock, 1000);
+    setInterval(fetchData, 15000);
+    clock();
+    fetchData();
+</script>
+</body>
+</html>

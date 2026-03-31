@@ -1,0 +1,19 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/topdesk/:path*",
+      "destination": "https://iccbrazil.topdesk.net/tas/api/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/topdesk/:path*",
+      "headers": [
+        {
+          "key": "Authorization",
+          "value": "Basic bGRuZWMtNWl3ZXotaHhjdGstNWdxbGMtZHFtN2E6bGRuZWMtNWl3ZXotaHhjdGstNWdxbGMtZHFtN2E="
+        }
+      ]
+    }
+  ]
+}
