@@ -139,7 +139,7 @@
     async function fetchData() {
         let finalData = [];
         try {
-            const res = await fetch('/api/topdesk/incidents?page_size=100', { headers });
+            const res = await fetch('/api/topdesk?path=incidents?page_size=100');
             if (res.ok) {
                 const data = await res.json();
                 if (Array.isArray(data)) finalData = [...data];
@@ -147,7 +147,8 @@
         } catch (e) { console.error("Erro Incidentes"); }
 
         try {
-            const resM = await fetch('/api/topdesk/operatorChanges', { headers });
+            const res = await fetch('/api/topdesk?path=incidents?page_size=100');
+            const resM = await fetch('/api/topdesk?path=operatorChanges');
             if (resM.ok) {
                 const dataM = await resM.json();
                 const listM = Array.isArray(dataM) ? dataM : (dataM.results || []);
