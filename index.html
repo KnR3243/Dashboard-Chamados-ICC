@@ -77,7 +77,6 @@
             padding-right: 10px;
             padding-top: 15px;
             align-content: start;
-            /* Esconde a barra de rolagem para ficar bonito na TV */
             scrollbar-width: none; 
         }
         .grid-ativos::-webkit-scrollbar { display: none; }
@@ -146,21 +145,6 @@
             z-index: 5;
         }
 
-        /* BADGE DE DIAS ABERTO */
-        .days-badge {
-            position: absolute;
-            top: 12px;
-            right: 15px;
-            font-size: 0.75rem;
-            font-weight: 900;
-            color: #ffcc00;
-            background: rgba(255, 204, 0, 0.15);
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 204, 0, 0.3);
-            text-transform: uppercase;
-        }
-
         .pill-novo { background: var(--st-novo); }
         .pill-atendimento { background: var(--st-atendimento); }
         .pill-espera { background: var(--st-espera); color: #000; }
@@ -179,18 +163,33 @@
             flex-grow: 1; 
         }
 
+        /* NOVO RODAPÉ COM 3 COLUNAS */
         .card-footer {
             padding-top: 12px;
             border-top: 1px solid rgba(255,255,255,0.1);
+            display: grid;
+            grid-template-columns: 1.2fr 1fr auto;
+            gap: 10px;
         }
 
-        .info-label { font-size: 0.7rem; color: #777; text-transform: uppercase; font-weight: 900; }
-        .info-val { font-size: 1.1rem; font-weight: 600; color: #ddd; margin-bottom: 5px; display: block; }
-        .info-val:last-child { margin-bottom: 0; }
-        
+        .footer-col { display: flex; flex-direction: column; }
+        .footer-col.right { text-align: right; }
+
+        .info-label { font-size: 0.65rem; color: #777; text-transform: uppercase; font-weight: 900; margin-bottom: 3px; }
+        .info-val { font-size: 1rem; font-weight: 600; color: #ddd; }
         .val-operator { color: var(--icc-light-green); }
 
-        /* ANIMAÇÃO NOVO (AZUL) */
+        /* CLASSES DE TEMPO SUTIL/CRÍTICO */
+        .time-subtle { color: #aaa; font-size: 0.95rem; }
+        .time-warning { color: #f1a90f; font-size: 0.95rem; }
+        .time-critical { color: #ff3333; font-weight: 900; font-size: 0.95rem; animation: pulse-text 1.5s infinite; }
+
+        @keyframes pulse-text {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
         .live-pulse { animation: pulse-border 2s infinite; }
         @keyframes pulse-border {
             0% { border-color: rgba(0, 210, 255, 0.1); }
@@ -198,7 +197,6 @@
             100% { border-color: rgba(0, 210, 255, 0.1); }
         }
 
-        /* ANIMAÇÃO CRÍTICA (> 7 DIAS - VERMELHO) */
         .critical-pulse { animation: pulse-critical 1s infinite; }
         @keyframes pulse-critical {
             0% { border-color: rgba(255, 0, 0, 0.2); box-shadow: 0 0 0px rgba(255,0,0,0); }
@@ -291,29 +289,36 @@
 
         const solicitante = item.caller?.dynamicName || item.requester?.dynamicName || item.requestedBy?.dynamicName || "TI";
 
-        // CÁLCULO DE DIAS E VERIFICAÇÃO CRÍTICA (7 DIAS)
+        // LÓGICA DE TEMPO SUTIL / HORAS / DIAS
         const rawDate = item.creationDate || item.callDate || item.registeredDate;
-        let diasAberto = 0;
+        let timeString = "-";
+        let timeClass = "time-subtle";
         let isCritical = false;
-        let badgeHtml = "";
 
         if (rawDate) {
             const dataCriacao = new Date(rawDate);
             const diffTime = Math.max(0, new Date() - dataCriacao);
-            diasAberto = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diasAberto >= 7) {
-                isCritical = true;
+            const diffMins = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffMins < 60) {
+                timeString = diffMins <= 1 ? "AGORA" : `HÁ ${diffMins} MIN`;
+            } else if (diffHours < 24) {
+                timeString = `HÁ ${diffHours}H`;
+            } else {
+                timeString = `HÁ ${diffDays} DIA${diffDays > 1 ? 'S' : ''}`;
             }
 
-            // Exibe a Badge SÓ se for NOVO
-            if (statusName.toLowerCase().includes('novo')) {
-                let txt = diasAberto === 0 ? "HOJE" : (diasAberto === 1 ? "1 DIA" : `${diasAberto} DIAS`);
-                badgeHtml = `<div class="days-badge">HÁ ${txt}</div>`;
+            // Definição de Cores
+            if (diffDays >= 7) {
+                isCritical = true;
+                timeClass = "time-critical";
+            } else if (diffDays >= 4) {
+                timeClass = "time-warning"; // Mais de 4 dias fica amarelo
             }
         }
 
-        // Aplica classe de animação (Vermelho Pisca > Azul Pisca)
         let animationClass = "";
         if (isCritical) {
             animationClass = "critical-pulse";
@@ -324,14 +329,22 @@
         return `
             <div class="card ${animationClass}" style="border-color: ${isCritical ? '#ff3333' : style.color}">
                 <div class="status-pill ${style.pill}">${textoPill}</div>
-                ${badgeHtml}
                 <div class="ticket-id"># ${idCurto}</div>
                 <div class="subject">${item.briefDescription || "Sem Assunto"}</div>
+                
                 <div class="card-footer">
-                    <span class="info-label">Solicitante</span>
-                    <span class="info-val">${solicitante}</span>
-                    <span class="info-label">Atendido por</span>
-                    <span class="info-val val-operator">${opName}</span>
+                    <div class="footer-col">
+                        <span class="info-label">Solicitante</span>
+                        <span class="info-val">${solicitante}</span>
+                    </div>
+                    <div class="footer-col">
+                        <span class="info-label">Atendido</span>
+                        <span class="info-val val-operator">${opName}</span>
+                    </div>
+                    <div class="footer-col right">
+                        <span class="info-label">Aberto</span>
+                        <span class="info-val ${timeClass}">${timeString}</span>
+                    </div>
                 </div>
             </div>
         `;
@@ -380,7 +393,7 @@
         document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
     }
 
-    // --- SCRIPT DE SCROLL INTELIGENTE (PING-PONG) PARA A FILA ATIVA ---
+    // SCROLL INTELIGENTE CORRIGIDO E MAIS LENTO
     let scrollDir = 1;
     let isPaused = false;
     
@@ -389,29 +402,27 @@
         const el = document.getElementById('grid-ativos');
         if (!el) return;
         
-        // Só rola se tiver mais cards do que cabe na tela
         if (el.scrollHeight > el.clientHeight) {
             el.scrollTop += scrollDir;
             
-            // Chegou no fundo: Pausa 2s e começa a subir
-            if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
+            // Math.ceil() resolve o problema de travar no fundo
+            if (scrollDir === 1 && Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight) {
                 isPaused = true;
                 scrollDir = -1;
-                setTimeout(() => { isPaused = false; }, 2000);
+                setTimeout(() => { isPaused = false; }, 2500);
             } 
-            // Chegou no topo: Pausa 2s e começa a descer
-            else if (el.scrollTop <= 0) {
+            else if (scrollDir === -1 && el.scrollTop <= 0) {
                 isPaused = true;
                 scrollDir = 1;
-                setTimeout(() => { isPaused = false; }, 2000);
+                setTimeout(() => { isPaused = false; }, 2500);
             }
         }
     }
 
-    // Inicia os timers
     setInterval(clock, 1000);
     setInterval(fetchData, 15000);
-    setInterval(autoScrollGrid, 40); // Motor do scroll rodando liso
+    // Intervalo aumentado de 40 para 60 para rolar mais devagar
+    setInterval(autoScrollGrid, 60); 
 
     clock();
     fetchData();
