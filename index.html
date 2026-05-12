@@ -45,7 +45,6 @@
         #data-extenso { font-size: 1.1rem; font-weight: 400; text-transform: capitalize; opacity: 0.9; margin-bottom: 2px;}
         #relogio { font-size: 2.8rem; font-weight: 900; letter-spacing: -2px; line-height: 1; }
 
-        /* LAYOUT DUAS COLUNAS */
         main {
             display: flex;
             flex: 1;
@@ -54,11 +53,11 @@
             padding: 20px 30px 30px 30px;
         }
 
-        /* COLUNA ESQUERDA: ATIVOS */
         .col-ativos {
             flex: 2;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .col-title {
             font-size: 1.2rem;
@@ -76,11 +75,13 @@
             gap: 20px 25px;
             overflow-y: auto;
             padding-right: 10px;
-            padding-top: 15px; /* Evita corte da tag */
+            padding-top: 15px;
             align-content: start;
+            /* Esconde a barra de rolagem para ficar bonito na TV */
+            scrollbar-width: none; 
         }
+        .grid-ativos::-webkit-scrollbar { display: none; }
 
-        /* COLUNA DIREITA: ESPERA ANIMADA */
         .col-espera {
             flex: 1;
             display: flex;
@@ -107,8 +108,9 @@
             gap: 20px;
             position: absolute;
             width: 100%;
-            padding-top: 15px; /* Evita corte da tag */
+            padding-top: 15px;
             animation: subir 30s linear infinite;
+            will-change: transform;
         }
 
         @keyframes subir {
@@ -116,7 +118,6 @@
             100% { transform: translateY(-50%); }
         }
 
-        /* CARDS */
         .card {
             background-color: var(--glass-bg);
             backdrop-filter: blur(30px);
@@ -133,7 +134,7 @@
 
         .status-pill {
             position: absolute;
-            top: -10px; /* Tag levemente rebaixada */
+            top: -10px;
             left: 20px;
             padding: 6px 16px;
             border-radius: 10px;
@@ -145,13 +146,28 @@
             z-index: 5;
         }
 
+        /* BADGE DE DIAS ABERTO */
+        .days-badge {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: #ffcc00;
+            background: rgba(255, 204, 0, 0.15);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            text-transform: uppercase;
+        }
+
         .pill-novo { background: var(--st-novo); }
         .pill-atendimento { background: var(--st-atendimento); }
         .pill-espera { background: var(--st-espera); color: #000; }
         .pill-pausado { background: var(--st-pausado); }
         .pill-default { background: var(--st-default); color: #000; }
 
-        .ticket-id { font-size: 1.2rem; color: #ffffff; font-weight: 900; margin-bottom: 5px; }
+        .ticket-id { font-size: 1.2rem; color: #ffffff; font-weight: 900; margin-bottom: 5px; margin-top: 5px; }
         
         .subject {
             font-size: 1.3rem; 
@@ -174,6 +190,7 @@
         
         .val-operator { color: var(--icc-light-green); }
 
+        /* ANIMAÇÃO NOVO (AZUL) */
         .live-pulse { animation: pulse-border 2s infinite; }
         @keyframes pulse-border {
             0% { border-color: rgba(0, 210, 255, 0.1); }
@@ -181,8 +198,13 @@
             100% { border-color: rgba(0, 210, 255, 0.1); }
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: var(--icc-light-green); border-radius: 10px; }
+        /* ANIMAÇÃO CRÍTICA (> 7 DIAS - VERMELHO) */
+        .critical-pulse { animation: pulse-critical 1s infinite; }
+        @keyframes pulse-critical {
+            0% { border-color: rgba(255, 0, 0, 0.2); box-shadow: 0 0 0px rgba(255,0,0,0); }
+            50% { border-color: #ff3333; box-shadow: 0 0 20px rgba(255, 51, 51, 0.6); }
+            100% { border-color: rgba(255, 0, 0, 0.2); box-shadow: 0 0 0px rgba(255,0,0,0); }
+        }
     </style>
 </head>
 <body>
@@ -214,6 +236,7 @@
 
 <script>
     const headers = { 'Accept': 'application/json' };
+    let lastDataHash = "";
 
     function getStyles(status) {
         const s = (status || "").toLowerCase();
@@ -225,26 +248,34 @@
     }
 
     async function fetchData() {
-        let finalData = [];
-        
         try {
-            const res = await fetch('/api/topdesk?path=incidents?page_size=100');
-            if (res.ok) {
-                const data = await res.json();
-                if (Array.isArray(data)) finalData = [...data];
-            }
-        } catch (e) { console.error("Erro Incidentes"); }
+            const [resInc, resChange] = await Promise.all([
+                fetch('/api/topdesk?path=incidents?page_size=100'),
+                fetch('/api/topdesk?path=operatorChanges')
+            ]);
 
-        try {
-            const resM = await fetch('/api/topdesk?path=operatorChanges');
-            if (resM.ok) {
-                const dataM = await resM.json();
+            let finalData = [];
+
+            if (resInc.ok) {
+                const data = await resInc.json();
+                if (Array.isArray(data)) finalData.push(...data);
+            }
+
+            if (resChange.ok) {
+                const dataM = await resChange.json();
                 const listM = Array.isArray(dataM) ? dataM : (dataM.results || []);
-                finalData = [...finalData, ...listM];
+                finalData.push(...listM);
             }
-        } catch (e) { console.error("Erro Mudanças"); }
 
-        render(finalData);
+            const currentHash = JSON.stringify(finalData);
+            if (currentHash === lastDataHash) return;
+            
+            lastDataHash = currentHash;
+            render(finalData);
+
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     function createCardHTML(item) {
@@ -256,14 +287,44 @@
         
         let opObj = item.operator || item.assignee || item.simple?.assignee || item.complex?.assignee;
         let opName = opObj?.dynamicName || opObj?.name || "-";
-        
         if (opName.toUpperCase().includes("TI") || opName === "") opName = "-";
 
         const solicitante = item.caller?.dynamicName || item.requester?.dynamicName || item.requestedBy?.dynamicName || "TI";
 
+        // CÁLCULO DE DIAS E VERIFICAÇÃO CRÍTICA (7 DIAS)
+        const rawDate = item.creationDate || item.callDate || item.registeredDate;
+        let diasAberto = 0;
+        let isCritical = false;
+        let badgeHtml = "";
+
+        if (rawDate) {
+            const dataCriacao = new Date(rawDate);
+            const diffTime = Math.max(0, new Date() - dataCriacao);
+            diasAberto = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diasAberto >= 7) {
+                isCritical = true;
+            }
+
+            // Exibe a Badge SÓ se for NOVO
+            if (statusName.toLowerCase().includes('novo')) {
+                let txt = diasAberto === 0 ? "HOJE" : (diasAberto === 1 ? "1 DIA" : `${diasAberto} DIAS`);
+                badgeHtml = `<div class="days-badge">HÁ ${txt}</div>`;
+            }
+        }
+
+        // Aplica classe de animação (Vermelho Pisca > Azul Pisca)
+        let animationClass = "";
+        if (isCritical) {
+            animationClass = "critical-pulse";
+        } else if (statusName.toLowerCase().includes('novo')) {
+            animationClass = "live-pulse";
+        }
+
         return `
-            <div class="card ${statusName.toLowerCase().includes('novo') ? 'live-pulse' : ''}" style="border-color: ${style.color}">
+            <div class="card ${animationClass}" style="border-color: ${isCritical ? '#ff3333' : style.color}">
                 <div class="status-pill ${style.pill}">${textoPill}</div>
+                ${badgeHtml}
                 <div class="ticket-id"># ${idCurto}</div>
                 <div class="subject">${item.briefDescription || "Sem Assunto"}</div>
                 <div class="card-footer">
@@ -282,7 +343,6 @@
 
         if (!lista || lista.length === 0) return;
 
-        // Filtra os resolvidos/fechados
         const dadosLimpos = lista.filter(item => {
             const isM = item.number && item.number.startsWith('M');
             const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
@@ -293,13 +353,11 @@
             return true;
         });
 
-        // Coluna Esquerda
         const ativos = dadosLimpos.filter(item => {
             const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
             return s.includes('novo') || s.includes('atendimento') || s.includes('andamento');
         });
 
-        // Coluna Direita
         const espera = dadosLimpos.filter(item => {
             const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
             return s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor');
@@ -307,11 +365,9 @@
 
         gridAtivos.innerHTML = ativos.map(i => createCardHTML(i)).join('');
         
-        // Loop infinito na coluna direita
         const htmlEspera = espera.map(i => createCardHTML(i)).join('');
         listaEspera.innerHTML = htmlEspera + htmlEspera;
 
-        // Ajusta velocidade de rolagem baseado na quantidade
         const duration = Math.max(20, espera.length * 5); 
         listaEspera.style.animationDuration = `${duration}s`;
     }
@@ -324,8 +380,39 @@
         document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
     }
 
+    // --- SCRIPT DE SCROLL INTELIGENTE (PING-PONG) PARA A FILA ATIVA ---
+    let scrollDir = 1;
+    let isPaused = false;
+    
+    function autoScrollGrid() {
+        if (isPaused) return;
+        const el = document.getElementById('grid-ativos');
+        if (!el) return;
+        
+        // Só rola se tiver mais cards do que cabe na tela
+        if (el.scrollHeight > el.clientHeight) {
+            el.scrollTop += scrollDir;
+            
+            // Chegou no fundo: Pausa 2s e começa a subir
+            if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
+                isPaused = true;
+                scrollDir = -1;
+                setTimeout(() => { isPaused = false; }, 2000);
+            } 
+            // Chegou no topo: Pausa 2s e começa a descer
+            else if (el.scrollTop <= 0) {
+                isPaused = true;
+                scrollDir = 1;
+                setTimeout(() => { isPaused = false; }, 2000);
+            }
+        }
+    }
+
+    // Inicia os timers
     setInterval(clock, 1000);
     setInterval(fetchData, 15000);
+    setInterval(autoScrollGrid, 40); // Motor do scroll rodando liso
+
     clock();
     fetchData();
 </script>
