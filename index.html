@@ -151,7 +151,15 @@
         .pill-pausado { background: var(--st-pausado); }
         .pill-default { background: var(--st-default); color: #000; }
 
-        .ticket-id { font-size: 1.2rem; color: #ffffff; font-weight: 900; margin-bottom: 5px; margin-top: 5px; }
+        /* HEADER DO TICKET: Fica o ID e o Tempo na mesma linha */
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .ticket-id { font-size: 1.1rem; color: #ffffff; font-weight: 900; }
         
         .subject {
             font-size: 1.3rem; 
@@ -163,26 +171,30 @@
             flex-grow: 1; 
         }
 
-        /* NOVO RODAPÉ COM 3 COLUNAS */
+        /* RODAPÉ VOLTOU A SER 2 COLUNAS LIMPAS */
         .card-footer {
-            padding-top: 12px;
+            padding-top: 10px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            display: grid;
-            grid-template-columns: 1.2fr 1fr auto;
-            gap: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .footer-col { display: flex; flex-direction: column; }
-        .footer-col.right { text-align: right; }
 
         .info-label { font-size: 0.65rem; color: #777; text-transform: uppercase; font-weight: 900; margin-bottom: 3px; }
         .info-val { font-size: 1rem; font-weight: 600; color: #ddd; }
         .val-operator { color: var(--icc-light-green); }
 
-        /* CLASSES DE TEMPO SUTIL/CRÍTICO */
-        .time-subtle { color: #aaa; font-size: 0.95rem; }
-        .time-warning { color: #f1a90f; font-size: 0.95rem; }
-        .time-critical { color: #ff3333; font-weight: 900; font-size: 0.95rem; animation: pulse-text 1.5s infinite; }
+        /* BADGES DE TEMPO (Pequenos e elegantes) */
+        .time-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .time-subtle { color: #aaa; background: rgba(255, 255, 255, 0.05); }
+        .time-warning { color: #f1a90f; background: rgba(241, 169, 15, 0.1); }
+        .time-critical { color: #ff3333; background: rgba(255, 51, 51, 0.1); font-weight: 900; animation: pulse-text 1.5s infinite; }
 
         @keyframes pulse-text {
             0% { opacity: 1; }
@@ -278,7 +290,9 @@
 
     function createCardHTML(item) {
         const isM = item.number && item.number.startsWith('M');
-        const idCurto = item.number.split('-').pop();
+        // Mantemos o número completo do chamado
+        const idCompleto = item.number; 
+        
         const statusName = isM ? (item.status?.name || "Novo") : (item.processingStatus?.name || "Novo");
         const style = getStyles(statusName);
         const textoPill = isM ? `MUDANÇAS: ${statusName.toUpperCase()}` : statusName.toUpperCase();
@@ -289,7 +303,7 @@
 
         const solicitante = item.caller?.dynamicName || item.requester?.dynamicName || item.requestedBy?.dynamicName || "TI";
 
-        // LÓGICA DE TEMPO SUTIL / HORAS / DIAS
+        // LÓGICA DE TEMPO
         const rawDate = item.creationDate || item.callDate || item.registeredDate;
         let timeString = "-";
         let timeClass = "time-subtle";
@@ -310,12 +324,11 @@
                 timeString = `HÁ ${diffDays} DIA${diffDays > 1 ? 'S' : ''}`;
             }
 
-            // Definição de Cores
             if (diffDays >= 7) {
                 isCritical = true;
                 timeClass = "time-critical";
             } else if (diffDays >= 4) {
-                timeClass = "time-warning"; // Mais de 4 dias fica amarelo
+                timeClass = "time-warning";
             }
         }
 
@@ -329,7 +342,12 @@
         return `
             <div class="card ${animationClass}" style="border-color: ${isCritical ? '#ff3333' : style.color}">
                 <div class="status-pill ${style.pill}">${textoPill}</div>
-                <div class="ticket-id"># ${idCurto}</div>
+                
+                <div class="ticket-header">
+                    <div class="ticket-id">${idCompleto}</div>
+                    <div class="time-badge ${timeClass}">${timeString}</div>
+                </div>
+                
                 <div class="subject">${item.briefDescription || "Sem Assunto"}</div>
                 
                 <div class="card-footer">
@@ -337,13 +355,9 @@
                         <span class="info-label">Solicitante</span>
                         <span class="info-val">${solicitante}</span>
                     </div>
-                    <div class="footer-col">
-                        <span class="info-label">Atendido</span>
+                    <div class="footer-col" style="text-align: right;">
+                        <span class="info-label">Atendido por</span>
                         <span class="info-val val-operator">${opName}</span>
-                    </div>
-                    <div class="footer-col right">
-                        <span class="info-label">Aberto</span>
-                        <span class="info-val ${timeClass}">${timeString}</span>
                     </div>
                 </div>
             </div>
@@ -393,7 +407,7 @@
         document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
     }
 
-    // SCROLL INTELIGENTE CORRIGIDO E MAIS LENTO
+    // SCROLL INTELIGENTE COM CÁLCULO SEGURO CONTRA TRAVAMENTO
     let scrollDir = 1;
     let isPaused = false;
     
@@ -405,8 +419,8 @@
         if (el.scrollHeight > el.clientHeight) {
             el.scrollTop += scrollDir;
             
-            // Math.ceil() resolve o problema de travar no fundo
-            if (scrollDir === 1 && Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight) {
+            // Margem de segurança de 2 pixels para não travar nas frações de TV
+            if (scrollDir === 1 && (el.scrollHeight - el.clientHeight - el.scrollTop) <= 2) {
                 isPaused = true;
                 scrollDir = -1;
                 setTimeout(() => { isPaused = false; }, 2500);
@@ -421,7 +435,6 @@
 
     setInterval(clock, 1000);
     setInterval(fetchData, 15000);
-    // Intervalo aumentado de 40 para 60 para rolar mais devagar
     setInterval(autoScrollGrid, 60); 
 
     clock();
