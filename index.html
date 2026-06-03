@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICC - Chamados</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
-
         :root {
             --icc-light-green: #70b02a;
             --icc-dark-green: #2b571e;
-            --glass-bg: rgba(20, 24, 22, 0.95);
+            --glass-bg: rgba(12, 15, 14, 0.92);
             --st-novo: #00d2ff;
             --st-atendimento: #2ecc71;
             --st-espera: #f1a90f;
             --st-pausado: #9b59b6;
             --st-default: #ffffff;
-            --ranking-bg: rgba(10, 15, 12, 0.85);
-            --panel-border: rgba(255,255,255,0.12);
-            --text-main: #ffffff;
-            --text-soft: #f1f5f9;
-            --text-muted: #cbd5e1;
-            --highlight: #38bdf8;
+            --ranking-bg: rgba(8, 10, 10, 0.76);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-soft: #dbe4ee;
+            --text-muted: #9fb0c2;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { width: 100%; height: 100%; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background:
-                linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.85)),
-                url('fundo.jpg') no-repeat center center fixed;
+                linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.82)),
+                url('fundo.jpg') no-repeat center center;
             background-size: cover;
             color: var(--text-main);
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -42,143 +51,235 @@
         }
 
         header {
-            background: linear-gradient(90deg, rgba(112,176,42,0.98) 0%, rgba(74,139,37,0.98) 55%, rgba(35,82,27,0.98) 100%);
-            height: 80px;
+            background: linear-gradient(90deg, rgba(112, 176, 42, 0.98) 0%, rgba(74, 139, 37, 0.98) 55%, rgba(35, 82, 27, 0.98) 100%);
+            height: 74px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding: 0 28px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 100;
             flex: 0 0 auto;
         }
-        .header-left { display: flex; flex-direction: row; align-items: center; gap: 20px; }
-        .header-left img { height: 50px; filter: brightness(0) invert(1); object-fit: contain; }
+
+        .header-left {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 18px;
+            min-width: 0;
+        }
+
+        .header-left img {
+            height: 46px;
+            filter: brightness(0) invert(1);
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
         .header-left h1 {
-            font-size: 1.8rem;
+            font-size: 1.55rem;
             font-weight: 900;
             text-transform: uppercase;
             margin: 0;
             white-space: nowrap;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 0.2px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
         }
-        .header-right { text-align: right; }
-        #data-extenso { font-size: 1.1rem; font-weight: 700; text-transform: capitalize; opacity: 0.95; }
-        #relogio { font-size: 2.6rem; font-weight: 900; letter-spacing: -1.5px; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+
+        .header-right {
+            text-align: right;
+            flex: 0 0 auto;
+        }
+
+        #data-extenso {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: capitalize;
+            opacity: 0.95;
+            margin-bottom: 1px;
+        }
+
+        #relogio {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1.6px;
+            line-height: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+        }
 
         main {
             display: flex;
             flex: 1 1 auto;
             min-height: 0;
             overflow: hidden;
-            gap: 20px;
-            padding: 20px 30px 25px 30px;
+            gap: 18px;
+            padding: 16px 28px 20px 28px;
         }
 
         .col-ativos {
-            flex: 2.2;
+            flex: 2.05;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             min-width: 0;
+            min-height: 0;
         }
+
         .col-title {
-            font-size: 1.25rem;
+            font-size: 1.03rem;
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 15px;
-            padding-left: 12px;
-            border-left: 5px solid var(--st-atendimento);
+            margin-bottom: 12px;
+            padding-left: 10px;
+            border-left: 4px solid var(--st-atendimento);
             color: #fff;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            opacity: 0.96;
             line-height: 1.15;
             flex: 0 0 auto;
         }
 
         .grid-ativos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 20px 20px;
+            grid-template-columns: repeat(auto-fill, minmax(304px, 1fr));
+            gap: 18px 18px;
             overflow-y: auto;
             min-height: 0;
-            padding: 10px 5px 30px 0;
+            padding: 14px 4px 26px 0;
             align-content: start;
             scrollbar-width: none;
             overscroll-behavior: contain;
         }
-        .grid-ativos::-webkit-scrollbar { display: none; }
 
-        .col-direita {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            overflow: hidden;
-            min-width: 0;
+        .grid-ativos::-webkit-scrollbar {
+            display: none;
         }
 
+        .col-direita {
+            flex: 0.98;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow: hidden;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        /* RANKING */
         .ranking-container {
             background: var(--ranking-bg);
-            border-radius: 16px;
-            padding: 18px 20px;
+            border-radius: 14px;
+            padding: 14px 16px;
             border: 1px solid var(--panel-border);
             display: flex;
             flex-direction: column;
             flex: 0 0 auto;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
         }
-        .col-title.ranking { border-left-color: #ff4d4f; margin-bottom: 12px; font-size: 1.2rem;}
+
+        .col-title.ranking {
+            border-left-color: #ff4d4f;
+            margin-bottom: 10px;
+        }
 
         .ranking-header {
             display: grid;
-            grid-template-columns: 45px 1fr 65px 85px;
-            font-size: 0.8rem;
+            grid-template-columns: 38px 1fr 54px 74px;
+            font-size: 0.62rem;
             color: var(--text-muted);
             text-transform: uppercase;
             font-weight: 900;
-            padding: 0 8px 10px 8px;
-            border-bottom: 2px solid rgba(255,255,255,0.15);
-            margin-bottom: 10px;
-            gap: 10px;
+            padding: 0 8px 8px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+            margin-bottom: 8px;
+            gap: 8px;
+            letter-spacing: 0.25px;
         }
 
-        .ranking-list { display: flex; flex-direction: column; gap: 8px; }
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
         .rank-item {
             display: grid;
-            grid-template-columns: 45px 1fr 65px 85px;
+            grid-template-columns: 38px 1fr 54px 74px;
             align-items: center;
-            background: rgba(255,255,255,0.06);
-            padding: 10px 12px;
-            border-radius: 10px;
-            gap: 10px;
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 7px 9px;
+            border-radius: 9px;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .rank-item:nth-child(1) { background: rgba(255, 51, 51, 0.18); border-left: 4px solid #ff3333; }
-        .rank-item:nth-child(2) { background: rgba(241, 169, 15, 0.15); border-left: 4px solid #f1a90f; }
 
-        .rank-pos { font-weight: 900; font-size: 1.15rem; color: #fff; text-align: center; }
-        .rank-item:nth-child(1) .rank-pos { color: #ff6161; }
-        .rank-name { font-size: 1.1rem; font-weight: 800; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .rank-tickets { font-size: 1.2rem; font-weight: 900; color: var(--highlight); text-align: center; }
-        .rank-avg { font-size: 1rem; font-weight: 900; color: #facc15; text-align: right; white-space: nowrap; }
+        .rank-item:nth-child(1) {
+            background: rgba(255, 51, 51, 0.14);
+            border-left: 3px solid #ff3333;
+        }
 
+        .rank-item:nth-child(2) {
+            background: rgba(241, 169, 15, 0.10);
+            border-left: 3px solid #f1a90f;
+        }
+
+        .rank-pos {
+            font-weight: 900;
+            font-size: 0.96rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .rank-item:nth-child(1) .rank-pos {
+            color: #ff6161;
+        }
+
+        .rank-name {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text-soft);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-tickets {
+            font-size: 0.96rem;
+            font-weight: 900;
+            color: #57c8ff;
+            text-align: center;
+        }
+
+        .rank-avg {
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #f8fafc;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        /* ESPERA */
         .espera-container {
             flex: 1 1 auto;
             min-height: 0;
             display: flex;
             flex-direction: column;
-            background: rgba(10, 15, 12, 0.85);
-            border-radius: 16px;
-            padding: 18px 20px;
+            background: rgba(8, 10, 10, 0.72);
+            border-radius: 14px;
+            padding: 14px 16px;
             position: relative;
             overflow: hidden;
             border: 1px solid var(--panel-border);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
         }
-        .col-title.waiting { border-left-color: var(--st-espera); margin-bottom: 10px; }
+
+        .col-title.waiting {
+            border-left-color: var(--st-espera);
+            margin-bottom: 8px;
+        }
 
         .marquee-vertical {
             flex: 1 1 auto;
@@ -187,397 +288,737 @@
             overflow: hidden;
         }
 
+        .marquee-vertical::before,
+        .marquee-vertical::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 18px;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .marquee-vertical::before {
+            top: 0;
+            background: linear-gradient(to bottom, rgba(8, 10, 10, 0.72), rgba(8, 10, 10, 0));
+        }
+
+        .marquee-vertical::after {
+            bottom: 0;
+            background: linear-gradient(to top, rgba(8, 10, 10, 0.72), rgba(8, 10, 10, 0));
+        }
+
         #lista-espera {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
             position: absolute;
             width: 100%;
-            padding-top: 10px;
-            padding-bottom: 30px;
+            padding: 14px 0 28px 0;
             animation: subir 30s linear infinite;
             will-change: transform;
         }
 
         @keyframes subir {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(0, -50%, 0); }
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(0, -50%, 0);
+            }
         }
 
+        /* CARDS */
         .card {
             background: var(--glass-bg);
-            border-radius: 14px;
-            padding: 26px 18px 16px 18px;
+            border-radius: 13px;
+            padding: 24px 14px 12px 14px;
             display: flex;
             flex-direction: column;
-            min-height: 140px;
+            min-height: 120px;
             height: max-content;
             position: relative;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            overflow: visible;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
+            border: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .status-pill {
             position: absolute;
             top: 0;
-            left: 15px;
+            left: 12px;
             transform: translateY(-50%);
-            padding: 5px 14px;
+            max-width: calc(100% - 24px);
+            padding: 4px 11px;
             border-radius: 999px;
-            font-size: 0.75rem;
+            font-size: 0.6rem;
+            line-height: 1.15;
             font-weight: 900;
             text-transform: uppercase;
             color: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
             z-index: 5;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.45px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .pill-novo { background: var(--st-novo); color: #000; }
-        .pill-atendimento { background: var(--st-atendimento); color: #000; }
-        .pill-espera { background: var(--st-espera); color: #000; }
-        .pill-pausado { background: var(--st-pausado); }
-        .pill-default { background: var(--st-default); color: #000; }
+        .pill-novo {
+            background: var(--st-novo);
+            color: #00141a;
+        }
+
+        .pill-atendimento {
+            background: var(--st-atendimento);
+            color: #04130a;
+        }
+
+        .pill-espera {
+            background: var(--st-espera);
+            color: #1b1200;
+        }
+
+        .pill-pausado {
+            background: var(--st-pausado);
+        }
+
+        .pill-default {
+            background: var(--st-default);
+            color: #111;
+        }
 
         .ticket-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 7px;
         }
+
         .ticket-id {
-            font-size: 1.15rem;
-            color: #a3e635;
+            font-size: 1rem;
+            color: #8bdc4b;
             font-weight: 900;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.35px;
+            white-space: nowrap;
         }
+
         .subject {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 800;
-            line-height: 1.3;
-            color: #ffffff;
-            margin-bottom: 12px;
+            line-height: 1.28;
+            color: #f4f7fb;
+            margin-bottom: 10px;
             word-wrap: break-word;
             flex-grow: 1;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
         }
 
         .card-footer {
-            padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 9px;
+            border-top: 1px solid rgba(255, 255, 255, 0.075);
             display: flex;
             justify-content: space-between;
             gap: 12px;
         }
 
-        .footer-col { display: flex; flex-direction: column; min-width: 0; }
-        .footer-col:last-child { align-items: flex-end; }
-        .info-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 900; margin-bottom: 4px; letter-spacing: 0.5px; }
-        
-        .info-val { font-size: 1.05rem; font-weight: 800; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-        .val-operator { color: var(--highlight); font-weight: 900; font-size: 1.1rem; }
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .footer-col:last-child {
+            align-items: flex-end;
+        }
+
+        .info-label {
+            font-size: 0.56rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 3px;
+            letter-spacing: 0.2px;
+        }
+
+        .info-val {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-soft);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 170px;
+        }
+
+        .val-operator {
+            color: #fff;
+            font-weight: 800;
+        }
 
         .time-badge {
-            font-size: 0.8rem;
+            font-size: 0.66rem;
             font-weight: 900;
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 3px 8px;
+            border-radius: 7px;
             white-space: nowrap;
+            flex: 0 0 auto;
         }
-        .time-subtle { color: #cbd5e1; background: rgba(255, 255, 255, 0.1); }
-        .time-warning { color: #facc15; background: rgba(241, 169, 15, 0.2); }
-        .time-critical { color: #ff5757; background: rgba(255, 51, 51, 0.2); font-weight: 900; animation: pulse-text 1.5s infinite; }
+
+        .time-subtle {
+            color: #aab8c6;
+            background: rgba(255, 255, 255, 0.055);
+        }
+
+        .time-warning {
+            color: #f1a90f;
+            background: rgba(241, 169, 15, 0.12);
+        }
+
+        .time-critical {
+            color: #ff5757;
+            background: rgba(255, 51, 51, 0.12);
+            font-weight: 900;
+            animation: pulse-text 1.5s infinite;
+        }
 
         @keyframes pulse-text {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.62;
+            }
         }
-        .live-pulse { animation: pulse-border 2.2s infinite; }
+
+        .live-pulse {
+            animation: pulse-border 2.2s infinite;
+        }
+
         @keyframes pulse-border {
-            0%, 100% { border-color: rgba(0, 210, 255, 0.3); }
-            50% { border-color: rgba(0, 210, 255, 0.9); }
+
+            0%,
+            100% {
+                border-color: rgba(0, 210, 255, 0.25);
+            }
+
+            50% {
+                border-color: rgba(0, 210, 255, 0.78);
+            }
         }
-        .critical-pulse { animation: pulse-critical 1.35s infinite; }
+
+        .critical-pulse {
+            animation: pulse-critical 1.35s infinite;
+        }
+
         @keyframes pulse-critical {
-            0%, 100% { border-color: rgba(255, 0, 0, 0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-            50% { border-color: #ef4444; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5), 0 0 10px rgba(239, 68, 68, 0.4); }
+
+            0%,
+            100% {
+                border-color: rgba(255, 0, 0, 0.25);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
+            }
+
+            50% {
+                border-color: #ef4444;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20), 0 0 8px rgba(239, 68, 68, 0.26);
+            }
+        }
+
+        @media (max-width: 1500px) {
+            header {
+                height: 68px;
+                padding: 0 20px;
+            }
+
+            .header-left {
+                gap: 14px;
+            }
+
+            .header-left img {
+                height: 40px;
+            }
+
+            .header-left h1 {
+                font-size: 1.28rem;
+            }
+
+            #data-extenso {
+                font-size: 0.86rem;
+            }
+
+            #relogio {
+                font-size: 1.92rem;
+            }
+
+            main {
+                gap: 12px;
+                padding: 12px 16px 16px 16px;
+            }
+
+            .col-title {
+                font-size: 0.94rem;
+                margin-bottom: 10px;
+            }
+
+            .grid-ativos {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 16px 12px;
+                padding-top: 14px;
+                padding-bottom: 24px;
+            }
+
+            .card {
+                min-height: 112px;
+                padding: 22px 12px 10px 12px;
+            }
+
+            .subject {
+                font-size: 0.9rem;
+                line-height: 1.24;
+            }
+
+            .ticket-id {
+                font-size: 0.92rem;
+            }
+
+            .ranking-container,
+            .espera-container {
+                padding: 12px 14px;
+                border-radius: 12px;
+            }
+
+            .ranking-header,
+            .rank-item {
+                grid-template-columns: 34px 1fr 46px 66px;
+                gap: 7px;
+            }
+
+            .rank-name {
+                font-size: 0.86rem;
+            }
+
+            .rank-avg {
+                font-size: 0.75rem;
+            }
+
+            .info-val {
+                max-width: 140px;
+            }
+        }
+
+        @media (max-width: 1180px) {
+            main {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .col-ativos,
+            .col-direita {
+                flex: none;
+                min-height: 0;
+            }
+
+            .grid-ativos {
+                max-height: 58vh;
+            }
+
+            .col-direita {
+                min-height: 360px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <div class="header-left">
-        <img src="logo.png" alt="Logo">
-        <h1>Chamados TopDesk</h1>
-    </div>
-    <div class="header-right">
-        <div id="data-extenso">...</div>
-        <div id="relogio">00:00:00</div>
-    </div>
-</header>
-
-<main>
-    <section class="col-ativos">
-        <h2 class="col-title">Fila Ativa (Novo / Em Atendimento)</h2>
-        <div class="grid-ativos" id="grid-ativos"></div>
-    </section>
-
-    <section class="col-direita">
-        <div class="ranking-container">
-            <h2 class="col-title ranking">Status Operador (Geral)</h2>
-            <div class="ranking-header">
-                <div style="text-align: center;">Pos</div>
-                <div>Operador</div>
-                <div style="text-align: center;">Total</div>
-                <div style="text-align: right;">Média Aberto</div>
-            </div>
-            <div class="ranking-list" id="ranking-list">
-            </div>
+    <header>
+        <div class="header-left">
+            <img src="logo.png" alt="Logo">
+            <h1>Chamados TopDesk</h1>
         </div>
-
-        <div class="espera-container">
-            <h2 class="col-title waiting">Em Espera / Pausados</h2>
-            <div class="marquee-vertical">
-                <div id="lista-espera"></div>
-            </div>
+        <div class="header-right">
+            <div id="data-extenso">...</div>
+            <div id="relogio">00:00:00</div>
         </div>
-    </section>
-</main>
+    </header>
 
-<script>
-    const headers = { 'Accept': 'application/json' };
-    let lastDataHash = "";
+    <main>
+        <section class="col-ativos">
+            <h2 class="col-title">Fila Ativa (Novo / Em Atendimento)</h2>
+            <div class="grid-ativos" id="grid-ativos"></div>
+        </section>
 
-    function getStyles(status) {
-        const s = (status || "").toLowerCase();
-        if (s.includes('novo')) return { pill: 'pill-novo', color: '#00d2ff' };
-        if (s.includes('atendimento') || s.includes('andamento')) return { pill: 'pill-atendimento', color: '#2ecc71' };
-        if (s.includes('aguardando') || s.includes('fornecedor')) return { pill: 'pill-espera', color: '#f1a90f' };
-        if (s.includes('pausado')) return { pill: 'pill-pausado', color: '#9b59b6' };
-        return { pill: 'pill-default', color: '#7f8c8d' }; 
-    }
+        <section class="col-direita">
+            <div class="ranking-container">
+                <h2 class="col-title ranking">Status Operador (Geral)</h2>
+                <div class="ranking-header">
+                    <div style="text-align: center;">Pos</div>
+                    <div>Operador</div>
+                    <div style="text-align: center;">Total</div>
+                    <div style="text-align: right;">Média Aberto</div>
+                </div>
+                <div class="ranking-list" id="ranking-list">
+                </div>
+            </div>
 
-    async function fetchData() {
-        try {
-            const [resInc, resChange] = await Promise.all([
-                fetch('/api/topdesk?path=' + encodeURIComponent('incidents?page_size=100')),
-                fetch('/api/topdesk?path=' + encodeURIComponent('operatorChanges?page_size=100'))
-            ]);
+            <div class="espera-container">
+                <h2 class="col-title waiting">Em Espera / Pausados</h2>
+                <div class="marquee-vertical">
+                    <div id="lista-espera"></div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-            let finalData = [];
+    <script>
+        const headers = { 'Accept': 'application/json' };
+        let lastDataHash = "";
 
-            if (resInc.ok) {
-                const data = await resInc.json();
-                if (Array.isArray(data)) finalData.push(...data);
-            }
+        // Busca paginada: PAGE_SIZE é o tamanho de cada página.
+        // A função continua buscando até a API devolver menos itens que PAGE_SIZE.
+        const PAGE_SIZE = 100;
+        const SAFETY_MAX_PAGES = 200; // trava de segurança para evitar loop infinito se a API repetir páginas
+        let isFetching = false;
 
-            if (resChange.ok) {
-                const dataM = await resChange.json();
-                const listM = Array.isArray(dataM) ? dataM : (dataM.results || []);
-                finalData.push(...listM);
-            }
-
-            const currentHash = JSON.stringify(finalData);
-            if (currentHash === lastDataHash) return;
-            
-            lastDataHash = currentHash;
-            render(finalData);
-
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    function createCardHTML(item) {
-        const isM = item.number && item.number.startsWith('M');
-        const idCompleto = item.number; 
-        const statusName = isM ? (item.status?.name || "Novo") : (item.processingStatus?.name || "Novo");
-        const style = getStyles(statusName);
-        const textoPill = isM ? `MUDANÇAS: ${statusName.toUpperCase()}` : statusName.toUpperCase();
-        
-        let opObj = item.operator || item.assignee || item.simple?.assignee || item.complex?.assignee;
-        let opName = opObj?.dynamicName || opObj?.name || "";
-
-        // Trata os nulos/em branco como "-" na exibição visual
-        if (opName === "" || opName.toUpperCase().includes("TI")) {
-            opName = "-";
+        function escapeHTML(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
 
-        const solicitante = item.caller?.dynamicName || item.requester?.dynamicName || item.requestedBy?.dynamicName || "TI";
-
-        const rawDate = item.creationDate || item.callDate || item.registeredDate;
-        let timeString = "-";
-        let timeClass = "time-subtle";
-        let isCritical = false;
-
-        if (rawDate) {
-            const dataCriacao = new Date(rawDate);
-            const diffTime = Math.max(0, new Date() - dataCriacao);
-            const diffMins = Math.floor(diffTime / (1000 * 60));
-            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-            if (diffMins < 60) {
-                timeString = diffMins <= 1 ? "AGORA" : `HÁ ${diffMins} MIN`;
-            } else if (diffHours < 24) {
-                timeString = `HÁ ${diffHours}H`;
-            } else {
-                timeString = `HÁ ${diffDays} DIA${diffDays > 1 ? 'S' : ''}`;
-            }
-
-            if (diffDays >= 7) { isCritical = true; timeClass = "time-critical"; } 
-            else if (diffDays >= 4) { timeClass = "time-warning"; }
+        function normalizeText(value) {
+            return String(value || "")
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim()
+                .toUpperCase();
         }
 
-        let animationClass = isCritical ? "critical-pulse" : (statusName.toLowerCase().includes('novo') ? "live-pulse" : "");
+        function isGroupOrEmptyOperator(name) {
+            const normalized = normalizeText(name);
+            if (!normalized || normalized === "-") return true;
 
-        return `
+            // Quando o Topdesk devolve o grupo de atendimento em vez do operador, mostrar como nulo.
+            return (
+                normalized === "TI" ||
+                /^T\.?I\.?$/.test(normalized) ||
+                normalized.includes("TECNOLOGIA DA INFORMACAO") ||
+                normalized.includes("SUPORTE TI") ||
+                normalized.includes("GRUPO TI") ||
+                normalized.includes("EQUIPE TI")
+            );
+        }
+
+        function getOperatorName(item) {
+            const candidates = [
+                item.operator,
+                item.simple?.operator,
+                item.complex?.operator,
+                item.assignee,
+                item.simple?.assignee,
+                item.complex?.assignee
+            ];
+
+            for (const opObj of candidates) {
+                const name = (opObj?.dynamicName || opObj?.name || "").trim();
+                if (!isGroupOrEmptyOperator(name)) return name;
+            }
+
+            return "-";
+        }
+
+        function getResponseList(data) {
+            if (Array.isArray(data)) return data;
+            if (data && Array.isArray(data.results)) return data.results;
+            return [];
+        }
+
+        function itemKey(item) {
+            return item.id || item.number || `${item.creationDate || item.callDate || item.registeredDate || ''}|${item.briefDescription || ''}`;
+        }
+
+        function dedupeItems(items) {
+            const seen = new Set();
+            return items.filter(item => {
+                const key = itemKey(item);
+                if (!key) return true;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+        }
+
+        async function fetchTopdeskPages(basePath) {
+            const allItems = [];
+            const seenPageKeys = new Set();
+            let page = 0;
+
+            while (page < SAFETY_MAX_PAGES) {
+                const start = page * PAGE_SIZE;
+                const separator = basePath.includes('?') ? '&' : '?';
+                const path = `${basePath}${separator}page_size=${PAGE_SIZE}&start=${start}`;
+                const res = await fetch('/api/topdesk?path=' + encodeURIComponent(path), { headers });
+
+                if (!res.ok) {
+                    console.error(`Erro na API Topdesk: ${basePath}. Status:`, res.status);
+                    break;
+                }
+
+                const data = await res.json();
+                const list = getResponseList(data);
+
+                if (list.length === 0) break;
+
+                // Proteção: se a API ignorar o start e repetir a mesma página, evita loop infinito.
+                const pageKey = list.map(itemKey).join('|');
+                if (seenPageKeys.has(pageKey)) {
+                    console.warn(`Página repetida detectada em ${basePath}. Encerrando paginação.`);
+                    break;
+                }
+                seenPageKeys.add(pageKey);
+
+                allItems.push(...list);
+
+                // Quando vem menos que PAGE_SIZE, chegamos na última página.
+                if (list.length < PAGE_SIZE) break;
+
+                page += 1;
+            }
+
+            if (page >= SAFETY_MAX_PAGES) {
+                console.warn(`Limite de segurança atingido em ${basePath}. Aumente SAFETY_MAX_PAGES se necessário.`);
+            }
+
+            return allItems;
+        }
+
+        function getStyles(status) {
+            const s = (status || "").toLowerCase();
+            if (s.includes('novo')) return { pill: 'pill-novo', color: '#00d2ff' };
+            if (s.includes('atendimento') || s.includes('andamento')) return { pill: 'pill-atendimento', color: '#2ecc71' };
+            if (s.includes('aguardando') || s.includes('fornecedor')) return { pill: 'pill-espera', color: '#f1a90f' };
+            if (s.includes('pausado')) return { pill: 'pill-pausado', color: '#9b59b6' };
+            return { pill: 'pill-default', color: '#7f8c8d' };
+        }
+
+        async function fetchData() {
+            if (isFetching) return;
+            isFetching = true;
+
+            try {
+                const [incidents, operatorChanges] = await Promise.all([
+                    fetchTopdeskPages('incidents'),
+                    fetchTopdeskPages('operatorChanges')
+                ]);
+
+                const finalData = dedupeItems([...incidents, ...operatorChanges]);
+                const currentHash = JSON.stringify(finalData);
+
+                if (currentHash === lastDataHash) return;
+
+                lastDataHash = currentHash;
+                render(finalData);
+
+            } catch (e) {
+                console.error(e);
+            } finally {
+                isFetching = false;
+            }
+        }
+
+        function createCardHTML(item) {
+            const isM = item.number && item.number.startsWith('M');
+            const idCompleto = item.number;
+            const statusName = isM ? (item.status?.name || "Novo") : (item.processingStatus?.name || "Novo");
+            const style = getStyles(statusName);
+            const textoPill = isM ? `MUDANÇAS: ${statusName.toUpperCase()}` : statusName.toUpperCase();
+
+            const opName = getOperatorName(item);
+            const solicitante = item.caller?.dynamicName || item.requester?.dynamicName || item.requestedBy?.dynamicName || "TI";
+
+            const rawDate = item.creationDate || item.callDate || item.registeredDate;
+            let timeString = "-";
+            let timeClass = "time-subtle";
+            let isCritical = false;
+
+            if (rawDate) {
+                const dataCriacao = new Date(rawDate);
+                const diffTime = Math.max(0, new Date() - dataCriacao);
+                const diffMins = Math.floor(diffTime / (1000 * 60));
+                const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffMins < 60) {
+                    timeString = diffMins <= 1 ? "AGORA" : `HÁ ${diffMins} MIN`;
+                } else if (diffHours < 24) {
+                    timeString = `HÁ ${diffHours}H`;
+                } else {
+                    timeString = `HÁ ${diffDays} DIA${diffDays > 1 ? 'S' : ''}`;
+                }
+
+                if (diffDays >= 7) { isCritical = true; timeClass = "time-critical"; }
+                else if (diffDays >= 4) { timeClass = "time-warning"; }
+            }
+
+            let animationClass = isCritical ? "critical-pulse" : (statusName.toLowerCase().includes('novo') ? "live-pulse" : "");
+
+            return `
             <div class="card ${animationClass}" style="border-color: ${isCritical ? '#ef4444' : style.color}">
                 <div class="status-pill ${style.pill}">${textoPill}</div>
                 <div class="ticket-header">
-                    <div class="ticket-id">${idCompleto}</div>
-                    <div class="time-badge ${timeClass}">${timeString}</div>
+                    <div class="ticket-id">${escapeHTML(idCompleto)}</div>
+                    <div class="time-badge ${timeClass}">${escapeHTML(timeString)}</div>
                 </div>
-                <div class="subject">${item.briefDescription || "Sem Assunto"}</div>
+                <div class="subject">${escapeHTML(item.briefDescription || "Sem Assunto")}</div>
                 <div class="card-footer">
                     <div class="footer-col">
                         <span class="info-label">Solicitante</span>
-                        <span class="info-val">${solicitante}</span>
+                        <span class="info-val">${escapeHTML(solicitante)}</span>
                     </div>
                     <div class="footer-col" style="text-align: right;">
                         <span class="info-label">Atendido por</span>
-                        <span class="info-val val-operator">${opName}</span>
+                        <span class="info-val val-operator">${escapeHTML(opName)}</span>
                     </div>
                 </div>
             </div>
         `;
-    }
+        }
 
-    function render(lista) {
-        const gridAtivos = document.getElementById('grid-ativos');
-        const listaEspera = document.getElementById('lista-espera');
-        const listaRanking = document.getElementById('ranking-list');
+        function render(lista) {
+            const gridAtivos = document.getElementById('grid-ativos');
+            const listaEspera = document.getElementById('lista-espera');
+            const listaRanking = document.getElementById('ranking-list');
 
-        if (!lista || lista.length === 0) return;
-
-        const dadosLimpos = lista.filter(item => {
-            const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
-            if (s.includes('resolvido') || s.includes('fechado') || s.includes('fechada') || s.includes('cancelad') || s.includes('conclu')) return false;
-            return true;
-        });
-
-        // ================= RANKING =================
-        const operadoresData = {};
-
-        dadosLimpos.forEach(item => {
-            let opObj = item.operator || item.assignee || item.simple?.assignee || item.complex?.assignee;
-            let opName = opObj?.dynamicName || opObj?.name || ""; 
-
-            // IGNORA CHAMADOS DE "TI" E NÃO ATRIBUÍDOS NO RANKING
-            if (opName === "" || opName.toUpperCase().includes("TI")) return;
-
-            let nomeCurto = opName.split(" ")[0];
-            const rawDate = item.creationDate || item.callDate || item.registeredDate;
-            let horasAberto = 0;
-            
-            if (rawDate) {
-                horasAberto = Math.max(0, new Date() - new Date(rawDate)) / (1000 * 60 * 60);
+            if (!lista || lista.length === 0) {
+                gridAtivos.innerHTML = "";
+                listaEspera.innerHTML = "";
+                listaRanking.innerHTML = `<div class="rank-item"><span class="rank-name" style="grid-column: 1 / -1; text-align: center;">Nenhum chamado encontrado.</span></div>`;
+                return;
             }
 
-            if (!operadoresData[nomeCurto]) {
-                operadoresData[nomeCurto] = { nome: nomeCurto, totalTickets: 0, totalHoras: 0 };
-            }
-            operadoresData[nomeCurto].totalTickets += 1;
-            operadoresData[nomeCurto].totalHoras += horasAberto;
-        });
+            // FILTRO GERAL: Esconde SOMENTE os fechados, resolvidos ou cancelados.
+            const dadosLimpos = lista.filter(item => {
+                const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
+                if (s.includes('resolvido') || s.includes('fechado') || s.includes('fechada') || s.includes('cancelad')) return false;
+                return true;
+            });
 
-        const rankingArray = Object.values(operadoresData).map(op => {
-            op.mediaHoras = op.totalHoras / op.totalTickets;
-            return op;
-        }).sort((a, b) => b.mediaHoras - a.mediaHoras).slice(0, 5);
+            // ================= RANKING: SOMA TUDO (ATIVOS + ESPERA) =================
+            const operadoresData = {};
 
-        if (rankingArray.length > 0) {
-            listaRanking.innerHTML = rankingArray.map((op, index) => {
-                let mediaDisplay = "";
-                if (op.mediaHoras < 1) {
-                    mediaDisplay = `${Math.floor(op.mediaHoras * 60)} min`;
-                } else if (op.mediaHoras < 24) {
-                    mediaDisplay = `${Math.floor(op.mediaHoras)}h`;
-                } else {
-                    mediaDisplay = `${Math.floor(op.mediaHoras / 24)} d`;
+            dadosLimpos.forEach(item => {
+                const opName = getOperatorName(item);
+
+                if (opName === "-") return;
+
+                let nomeCurto = opName.split(" ")[0];
+                const rawDate = item.creationDate || item.callDate || item.registeredDate;
+                let horasAberto = 0;
+
+                if (rawDate) {
+                    horasAberto = Math.max(0, new Date() - new Date(rawDate)) / (1000 * 60 * 60);
                 }
 
-                return `
+                if (!operadoresData[nomeCurto]) {
+                    operadoresData[nomeCurto] = { nome: nomeCurto, totalTickets: 0, totalHoras: 0 };
+                }
+                operadoresData[nomeCurto].totalTickets += 1;
+                operadoresData[nomeCurto].totalHoras += horasAberto;
+            });
+
+            const rankingArray = Object.values(operadoresData).map(op => {
+                op.mediaHoras = op.totalHoras / op.totalTickets;
+                return op;
+            }).sort((a, b) => b.mediaHoras - a.mediaHoras).slice(0, 5);
+
+            if (rankingArray.length > 0) {
+                listaRanking.innerHTML = rankingArray.map((op, index) => {
+                    let mediaDisplay = op.mediaHoras < 24
+                        ? `${Math.floor(op.mediaHoras)}h`
+                        : `${Math.floor(op.mediaHoras / 24)} dias`;
+
+                    return `
                     <div class="rank-item">
                         <span class="rank-pos">${index + 1}º</span>
-                        <span class="rank-name">${op.nome}</span>
-                        <span class="rank-tickets">${op.totalTickets}</span>
-                        <span class="rank-avg">${mediaDisplay}</span>
+                        <span class="rank-name">${escapeHTML(op.nome)}</span>
+                        <span class="rank-tickets">${escapeHTML(op.totalTickets)}</span>
+                        <span class="rank-avg">${escapeHTML(mediaDisplay)}</span>
                     </div>
                 `;
-            }).join('');
-        } else {
-            listaRanking.innerHTML = `<div class="rank-item"><span class="rank-name" style="grid-column: 1 / -1; text-align: center;">Nenhum operador com chamados.</span></div>`;
-        }
-
-        const espera = dadosLimpos.filter(item => {
-            const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
-            return s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor');
-        });
-
-        const ativos = dadosLimpos.filter(item => {
-            const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
-            return !(s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor'));
-        });
-
-        gridAtivos.innerHTML = ativos.map(i => createCardHTML(i)).join('');
-        
-        const htmlEspera = espera.map(i => createCardHTML(i)).join('');
-        listaEspera.innerHTML = htmlEspera + htmlEspera;
-
-        const duration = Math.max(20, espera.length * 4); 
-        listaEspera.style.animationDuration = `${duration}s`;
-    }
-
-    function clock() {
-        const agora = new Date();
-        const opt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        const dataStr = agora.toLocaleDateString('pt-BR', opt);
-        document.getElementById('data-extenso').innerText = dataStr.charAt(0).toUpperCase() + dataStr.slice(1);
-        document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
-    }
-
-    let scrollDir = 1;
-    let isPaused = false;
-    let scrollAccumulator = 0;
-    const speed = 0.45;
-    let gridAtivosEl = null;
-
-    function smoothScroll() {
-        if (!gridAtivosEl) gridAtivosEl = document.getElementById('grid-ativos');
-
-        if (!isPaused && gridAtivosEl && gridAtivosEl.scrollHeight > gridAtivosEl.clientHeight) {
-            scrollAccumulator += speed;
-            if (scrollAccumulator >= 1) { gridAtivosEl.scrollTop += scrollDir; scrollAccumulator = 0; }
-            
-            if (scrollDir === 1 && Math.ceil(gridAtivosEl.scrollTop + gridAtivosEl.clientHeight) >= gridAtivosEl.scrollHeight) {
-                isPaused = true; scrollDir = -1; setTimeout(() => { isPaused = false; }, 2400);
-            } 
-            else if (scrollDir === -1 && gridAtivosEl.scrollTop <= 0) {
-                isPaused = true; scrollDir = 1; setTimeout(() => { isPaused = false; }, 2400);
+                }).join('');
+            } else {
+                listaRanking.innerHTML = `<div class="rank-item"><span class="rank-name" style="grid-column: 1 / -1; text-align: center;">Nenhum operador com chamados.</span></div>`;
             }
+            // =================================================
+
+            // Separa para as Colunas
+            const espera = dadosLimpos.filter(item => {
+                const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
+                return s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor');
+            });
+
+            const ativos = dadosLimpos.filter(item => {
+                const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
+                return !(s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor'));
+            });
+
+            gridAtivos.innerHTML = ativos.map(i => createCardHTML(i)).join('');
+
+            const htmlEspera = espera.map(i => createCardHTML(i)).join('');
+            listaEspera.innerHTML = htmlEspera + htmlEspera;
+
+            const duration = Math.max(20, espera.length * 4);
+            listaEspera.style.animationDuration = `${duration}s`;
         }
+
+        function clock() {
+            const agora = new Date();
+            const opt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            const dataStr = agora.toLocaleDateString('pt-BR', opt);
+            document.getElementById('data-extenso').innerText = dataStr.charAt(0).toUpperCase() + dataStr.slice(1);
+            document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
+        }
+
+        let scrollDir = 1;
+        let isPaused = false;
+        let scrollAccumulator = 0;
+        const speed = 0.45;
+        let gridAtivosEl = null;
+
+        function smoothScroll() {
+            if (!gridAtivosEl) gridAtivosEl = document.getElementById('grid-ativos');
+
+            if (!isPaused && gridAtivosEl && gridAtivosEl.scrollHeight > gridAtivosEl.clientHeight) {
+                scrollAccumulator += speed;
+                if (scrollAccumulator >= 1) { gridAtivosEl.scrollTop += scrollDir; scrollAccumulator = 0; }
+
+                if (scrollDir === 1 && Math.ceil(gridAtivosEl.scrollTop + gridAtivosEl.clientHeight) >= gridAtivosEl.scrollHeight) {
+                    isPaused = true; scrollDir = -1; setTimeout(() => { isPaused = false; }, 2400);
+                }
+                else if (scrollDir === -1 && gridAtivosEl.scrollTop <= 0) {
+                    isPaused = true; scrollDir = 1; setTimeout(() => { isPaused = false; }, 2400);
+                }
+            }
+            requestAnimationFrame(smoothScroll);
+        }
+
+        setInterval(clock, 1000);
+        setInterval(fetchData, 15000);
         requestAnimationFrame(smoothScroll);
-    }
 
-    setInterval(clock, 1000);
-    setInterval(fetchData, 15000);
-    requestAnimationFrame(smoothScroll);
-
-    clock();
-    fetchData();
-</script>
+        clock();
+        fetchData();
+    </script>
 </body>
+
 </html>
