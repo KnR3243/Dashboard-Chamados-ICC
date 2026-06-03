@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const { path } = req.query;
-  const AUTH = process.env.TOPDESK_AUTH; 
+  const AUTH = process.env.TOPDESK_AUTH;
 
   const response = await fetch(`https://iccbrazil.topdesk.net/tas/api/${path}`, {
     headers: {

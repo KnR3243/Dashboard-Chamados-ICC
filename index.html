@@ -3,24 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICC - Chamados</title>
-    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="icon" href="/icone.png" type="image/png">
     <style>
         :root {
             --icc-light-green: #70b02a;
             --icc-dark-green: #2b571e;
-            --glass-bg: rgba(12, 15, 14, 0.92);
+            --glass-bg: rgba(14, 18, 15, 0.92);
+            --panel-bg: rgba(0, 0, 0, 0.34);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --st-novo: #00d2ff;
             --st-atendimento: #2ecc71;
             --st-espera: #f1a90f;
             --st-pausado: #9b59b6;
             --st-default: #ffffff;
-            --ranking-bg: rgba(8, 10, 10, 0.76);
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-soft: #dbe4ee;
-            --text-muted: #9fb0c2;
+            --ranking-bg: rgba(0, 0, 0, 0.36);
         }
 
         * {
@@ -29,21 +28,14 @@
             padding: 0;
         }
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
-
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background:
-                linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.82)),
-                url('fundo.jpg') no-repeat center center;
+                linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.84)),
+                url('/fundo.jpg') no-repeat center center;
             background-size: cover;
             color: var(--text-main);
             height: 100vh;
-            height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -51,16 +43,15 @@
         }
 
         header {
-            background: linear-gradient(90deg, rgba(112, 176, 42, 0.98) 0%, rgba(74, 139, 37, 0.98) 55%, rgba(35, 82, 27, 0.98) 100%);
-            height: 74px;
+            background: linear-gradient(90deg, var(--icc-light-green), var(--icc-dark-green));
+            min-height: 78px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 28px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0 30px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.42);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             z-index: 100;
-            flex: 0 0 auto;
         }
 
         .header-left {
@@ -72,85 +63,79 @@
         }
 
         .header-left img {
-            height: 46px;
+            height: 48px;
             filter: brightness(0) invert(1);
             object-fit: contain;
-            flex: 0 0 auto;
+            flex-shrink: 0;
         }
 
         .header-left h1 {
             font-size: 1.55rem;
-            font-weight: 900;
+            font-weight: 850;
             text-transform: uppercase;
             margin: 0;
             white-space: nowrap;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.3px;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
         }
 
         .header-right {
             text-align: right;
-            flex: 0 0 auto;
+            flex-shrink: 0;
         }
 
         #data-extenso {
             font-size: 0.95rem;
-            font-weight: 700;
+            font-weight: 500;
             text-transform: capitalize;
-            opacity: 0.95;
-            margin-bottom: 1px;
+            opacity: 0.92;
+            margin-bottom: 2px;
         }
 
         #relogio {
-            font-size: 2.2rem;
+            font-size: 2.28rem;
             font-weight: 900;
-            letter-spacing: -1.6px;
+            letter-spacing: -1.5px;
             line-height: 1;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
         }
 
         main {
             display: flex;
-            flex: 1 1 auto;
-            min-height: 0;
+            flex: 1;
             overflow: hidden;
             gap: 18px;
-            padding: 16px 28px 20px 28px;
+            padding: 18px 24px 22px 24px;
         }
 
         .col-ativos {
-            flex: 2.05;
+            flex: 2;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             min-width: 0;
-            min-height: 0;
         }
 
         .col-title {
-            font-size: 1.03rem;
+            font-size: 1.02rem;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 12px;
             padding-left: 10px;
             border-left: 4px solid var(--st-atendimento);
-            color: #fff;
-            letter-spacing: 0.3px;
-            opacity: 0.96;
-            line-height: 1.15;
-            flex: 0 0 auto;
+            color: #ffffff;
+            opacity: 0.94;
+            letter-spacing: 0.35px;
+            line-height: 1.2;
         }
 
         .grid-ativos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(304px, 1fr));
-            gap: 18px 18px;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 16px 18px;
             overflow-y: auto;
-            min-height: 0;
-            padding: 14px 4px 26px 0;
+            padding: 16px 6px 10px 0;
             align-content: start;
             scrollbar-width: none;
-            overscroll-behavior: contain;
         }
 
         .grid-ativos::-webkit-scrollbar {
@@ -158,45 +143,43 @@
         }
 
         .col-direita {
-            flex: 0.98;
+            flex: 1;
+            min-width: 340px;
             display: flex;
             flex-direction: column;
             gap: 14px;
             overflow: hidden;
-            min-width: 0;
-            min-height: 0;
         }
 
         /* RANKING */
         .ranking-container {
             background: var(--ranking-bg);
             border-radius: 14px;
-            padding: 14px 16px;
+            padding: 14px 16px 15px 16px;
             border: 1px solid var(--panel-border);
             display: flex;
             flex-direction: column;
-            flex: 0 0 auto;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.26);
         }
 
         .col-title.ranking {
-            border-left-color: #ff4d4f;
+            border-left-color: #ef4444;
             margin-bottom: 10px;
         }
 
         .ranking-header {
             display: grid;
-            grid-template-columns: 38px 1fr 54px 74px;
+            grid-template-columns: 38px 1fr 56px 78px;
             font-size: 0.62rem;
             color: var(--text-muted);
             text-transform: uppercase;
             font-weight: 900;
-            padding: 0 8px 8px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
             margin-bottom: 8px;
             gap: 8px;
-            letter-spacing: 0.25px;
+            letter-spacing: 0.35px;
         }
 
         .ranking-list {
@@ -207,40 +190,40 @@
 
         .rank-item {
             display: grid;
-            grid-template-columns: 38px 1fr 54px 74px;
+            grid-template-columns: 38px 1fr 56px 78px;
             align-items: center;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 7px 9px;
+            background: rgba(255, 255, 255, 0.045);
+            padding: 8px 9px;
             border-radius: 9px;
             gap: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-left: 3px solid rgba(255, 255, 255, 0.08);
         }
 
         .rank-item:nth-child(1) {
-            background: rgba(255, 51, 51, 0.14);
-            border-left: 3px solid #ff3333;
+            background: rgba(239, 68, 68, 0.14);
+            border-left-color: #ef4444;
         }
 
         .rank-item:nth-child(2) {
-            background: rgba(241, 169, 15, 0.10);
-            border-left: 3px solid #f1a90f;
+            background: rgba(241, 169, 15, 0.11);
+            border-left-color: #f1a90f;
         }
 
         .rank-pos {
             font-weight: 900;
-            font-size: 0.96rem;
-            color: #fff;
+            font-size: 0.98rem;
+            color: #ffffff;
             text-align: center;
         }
 
         .rank-item:nth-child(1) .rank-pos {
-            color: #ff6161;
+            color: #ff5c5c;
         }
 
         .rank-name {
             font-size: 0.92rem;
-            font-weight: 800;
-            color: var(--text-soft);
+            font-weight: 750;
+            color: #e2e8f0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -248,119 +231,94 @@
 
         .rank-tickets {
             font-size: 0.96rem;
-            font-weight: 900;
-            color: #57c8ff;
+            font-weight: 850;
+            color: #38bdf8;
             text-align: center;
         }
 
         .rank-avg {
-            font-size: 0.8rem;
-            font-weight: 900;
+            font-size: 0.82rem;
+            font-weight: 850;
             color: #f8fafc;
             text-align: right;
-            white-space: nowrap;
         }
 
         /* ESPERA */
         .espera-container {
-            flex: 1 1 auto;
-            min-height: 0;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            background: rgba(8, 10, 10, 0.72);
+            background: var(--panel-bg);
             border-radius: 14px;
-            padding: 14px 16px;
+            padding: 14px 16px 16px 16px;
             position: relative;
             overflow: hidden;
             border: 1px solid var(--panel-border);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.23);
         }
 
         .col-title.waiting {
             border-left-color: var(--st-espera);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .marquee-vertical {
-            flex: 1 1 auto;
-            min-height: 0;
+            flex: 1;
             position: relative;
             overflow: hidden;
-        }
-
-        .marquee-vertical::before,
-        .marquee-vertical::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 18px;
-            z-index: 4;
-            pointer-events: none;
-        }
-
-        .marquee-vertical::before {
-            top: 0;
-            background: linear-gradient(to bottom, rgba(8, 10, 10, 0.72), rgba(8, 10, 10, 0));
-        }
-
-        .marquee-vertical::after {
-            bottom: 0;
-            background: linear-gradient(to top, rgba(8, 10, 10, 0.72), rgba(8, 10, 10, 0));
         }
 
         #lista-espera {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
             position: absolute;
             width: 100%;
-            padding: 14px 0 28px 0;
+            padding-top: 16px;
             animation: subir 30s linear infinite;
             will-change: transform;
         }
 
         @keyframes subir {
             0% {
-                transform: translate3d(0, 0, 0);
+                transform: translateY(0);
             }
 
             100% {
-                transform: translate3d(0, -50%, 0);
+                transform: translateY(-50%);
             }
         }
 
         /* CARDS */
         .card {
-            background: var(--glass-bg);
+            background-color: var(--glass-bg);
             border-radius: 13px;
-            padding: 24px 14px 12px 14px;
+            padding: 19px 15px 12px 15px;
             display: flex;
             flex-direction: column;
-            min-height: 120px;
+            min-height: 128px;
             height: max-content;
             position: relative;
-            overflow: visible;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.34);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            contain: layout paint;
         }
 
         .status-pill {
             position: absolute;
-            top: 0;
-            left: 12px;
-            transform: translateY(-50%);
-            max-width: calc(100% - 24px);
+            top: -10px;
+            left: 14px;
             padding: 4px 11px;
-            border-radius: 999px;
-            font-size: 0.6rem;
-            line-height: 1.15;
+            border-radius: 8px;
+            font-size: 0.62rem;
             font-weight: 900;
             text-transform: uppercase;
             color: #fff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28);
             z-index: 5;
-            letter-spacing: 0.45px;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            max-width: calc(100% - 28px);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -368,17 +326,15 @@
 
         .pill-novo {
             background: var(--st-novo);
-            color: #00141a;
         }
 
         .pill-atendimento {
             background: var(--st-atendimento);
-            color: #04130a;
         }
 
         .pill-espera {
             background: var(--st-espera);
-            color: #1b1200;
+            color: #111827;
         }
 
         .pill-pausado {
@@ -387,39 +343,40 @@
 
         .pill-default {
             background: var(--st-default);
-            color: #111;
+            color: #111827;
         }
 
         .ticket-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            margin-top: 3px;
             margin-bottom: 7px;
         }
 
         .ticket-id {
-            font-size: 1rem;
-            color: #8bdc4b;
-            font-weight: 900;
-            letter-spacing: 0.35px;
+            font-size: 1.02rem;
+            color: var(--icc-light-green);
+            font-weight: 850;
+            letter-spacing: 0.45px;
             white-space: nowrap;
         }
 
         .subject {
-            font-size: 1rem;
-            font-weight: 800;
+            font-size: 1.08rem;
+            font-weight: 700;
             line-height: 1.28;
-            color: #f4f7fb;
-            margin-bottom: 10px;
+            color: #f1f5f9;
+            margin-bottom: 12px;
             word-wrap: break-word;
+            overflow-wrap: anywhere;
             flex-grow: 1;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
         }
 
         .card-footer {
-            padding-top: 9px;
-            border-top: 1px solid rgba(255, 255, 255, 0.075);
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
             gap: 12px;
@@ -436,53 +393,63 @@
         }
 
         .info-label {
-            font-size: 0.56rem;
+            font-size: 0.58rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            font-weight: 900;
-            margin-bottom: 3px;
-            letter-spacing: 0.2px;
+            font-weight: 850;
+            margin-bottom: 2px;
+            letter-spacing: 0.4px;
         }
 
         .info-val {
-            font-size: 0.84rem;
-            font-weight: 700;
-            color: var(--text-soft);
+            font-size: 0.86rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            max-width: 170px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 170px;
         }
 
         .val-operator {
-            color: #fff;
-            font-weight: 800;
+            color: #f8fafc;
+            font-weight: 650;
         }
 
         .time-badge {
-            font-size: 0.66rem;
-            font-weight: 900;
+            font-size: 0.68rem;
+            font-weight: 800;
             padding: 3px 8px;
             border-radius: 7px;
             white-space: nowrap;
-            flex: 0 0 auto;
         }
 
         .time-subtle {
-            color: #aab8c6;
+            color: var(--text-muted);
             background: rgba(255, 255, 255, 0.055);
         }
 
         .time-warning {
             color: #f1a90f;
-            background: rgba(241, 169, 15, 0.12);
+            background: rgba(241, 169, 15, 0.11);
         }
 
         .time-critical {
-            color: #ff5757;
-            background: rgba(255, 51, 51, 0.12);
+            color: #ff4b4b;
+            background: rgba(255, 51, 51, 0.11);
             font-weight: 900;
             animation: pulse-text 1.5s infinite;
+        }
+
+        .empty-state {
+            color: #94a3b8;
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 18px 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.035);
         }
 
         @keyframes pulse-text {
@@ -493,144 +460,93 @@
             }
 
             50% {
-                opacity: 0.62;
+                opacity: 0.55;
             }
         }
 
         .live-pulse {
-            animation: pulse-border 2.2s infinite;
+            animation: pulse-border 2s infinite;
+            will-change: border-color;
         }
 
         @keyframes pulse-border {
 
             0%,
             100% {
-                border-color: rgba(0, 210, 255, 0.25);
+                border-color: rgba(0, 210, 255, 0.22);
             }
 
             50% {
-                border-color: rgba(0, 210, 255, 0.78);
+                border-color: rgba(0, 210, 255, 0.82);
             }
         }
 
         .critical-pulse {
-            animation: pulse-critical 1.35s infinite;
+            animation: pulse-critical 1s infinite;
+            will-change: border-color, box-shadow;
         }
 
         @keyframes pulse-critical {
 
             0%,
             100% {
-                border-color: rgba(255, 0, 0, 0.25);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
+                border-color: rgba(255, 0, 0, 0.18);
+                box-shadow: 0 8px 18px rgba(0, 0, 0, 0.34);
             }
 
             50% {
                 border-color: #ef4444;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20), 0 0 8px rgba(239, 68, 68, 0.26);
-            }
-        }
-
-        @media (max-width: 1500px) {
-            header {
-                height: 68px;
-                padding: 0 20px;
-            }
-
-            .header-left {
-                gap: 14px;
-            }
-
-            .header-left img {
-                height: 40px;
-            }
-
-            .header-left h1 {
-                font-size: 1.28rem;
-            }
-
-            #data-extenso {
-                font-size: 0.86rem;
-            }
-
-            #relogio {
-                font-size: 1.92rem;
-            }
-
-            main {
-                gap: 12px;
-                padding: 12px 16px 16px 16px;
-            }
-
-            .col-title {
-                font-size: 0.94rem;
-                margin-bottom: 10px;
-            }
-
-            .grid-ativos {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 16px 12px;
-                padding-top: 14px;
-                padding-bottom: 24px;
-            }
-
-            .card {
-                min-height: 112px;
-                padding: 22px 12px 10px 12px;
-            }
-
-            .subject {
-                font-size: 0.9rem;
-                line-height: 1.24;
-            }
-
-            .ticket-id {
-                font-size: 0.92rem;
-            }
-
-            .ranking-container,
-            .espera-container {
-                padding: 12px 14px;
-                border-radius: 12px;
-            }
-
-            .ranking-header,
-            .rank-item {
-                grid-template-columns: 34px 1fr 46px 66px;
-                gap: 7px;
-            }
-
-            .rank-name {
-                font-size: 0.86rem;
-            }
-
-            .rank-avg {
-                font-size: 0.75rem;
-            }
-
-            .info-val {
-                max-width: 140px;
+                box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25);
             }
         }
 
         @media (max-width: 1180px) {
             main {
+                padding: 16px 18px 20px 18px;
+                gap: 14px;
+            }
+
+            .grid-ativos {
+                grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+            }
+
+            .col-direita {
+                min-width: 315px;
+            }
+
+            .subject {
+                font-size: 1.02rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                overflow: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            header {
+                padding: 0 18px;
+            }
+
+            main {
                 flex-direction: column;
-                overflow-y: auto;
+                overflow: visible;
             }
 
             .col-ativos,
             .col-direita {
-                flex: none;
-                min-height: 0;
+                overflow: visible;
+                min-width: 0;
             }
 
             .grid-ativos {
-                max-height: 58vh;
+                overflow: visible;
             }
 
-            .col-direita {
-                min-height: 360px;
+            .espera-container {
+                min-height: 420px;
             }
         }
     </style>
@@ -640,7 +556,7 @@
 
     <header>
         <div class="header-left">
-            <img src="logo.png" alt="Logo">
+            <img src="/icone.png" alt="Logo">
             <h1>Chamados TopDesk</h1>
         </div>
         <div class="header-right">
@@ -664,8 +580,7 @@
                     <div style="text-align: center;">Total</div>
                     <div style="text-align: right;">Média Aberto</div>
                 </div>
-                <div class="ranking-list" id="ranking-list">
-                </div>
+                <div class="ranking-list" id="ranking-list"></div>
             </div>
 
             <div class="espera-container">
@@ -678,14 +593,20 @@
     </main>
 
     <script>
-        const headers = { 'Accept': 'application/json' };
-        let lastDataHash = "";
-
-        // Busca paginada: PAGE_SIZE é o tamanho de cada página.
-        // A função continua buscando até a API devolver menos itens que PAGE_SIZE.
+        // Deploy marker: dashboard-index-2026-06-03-paginacao-visual-leve
         const PAGE_SIZE = 100;
-        const SAFETY_MAX_PAGES = 200; // trava de segurança para evitar loop infinito se a API repetir páginas
-        let isFetching = false;
+        const SAFETY_MAX_PAGES = 200;
+
+        let lastDataHash = "";
+        let gridAtivosEl = null;
+
+        function normalizeText(value) {
+            return String(value || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim()
+                .toUpperCase();
+        }
 
         function escapeHTML(value) {
             return String(value ?? "")
@@ -694,112 +615,6 @@
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
-        }
-
-        function normalizeText(value) {
-            return String(value || "")
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .trim()
-                .toUpperCase();
-        }
-
-        function isGroupOrEmptyOperator(name) {
-            const normalized = normalizeText(name);
-            if (!normalized || normalized === "-") return true;
-
-            // Quando o Topdesk devolve o grupo de atendimento em vez do operador, mostrar como nulo.
-            return (
-                normalized === "TI" ||
-                /^T\.?I\.?$/.test(normalized) ||
-                normalized.includes("TECNOLOGIA DA INFORMACAO") ||
-                normalized.includes("SUPORTE TI") ||
-                normalized.includes("GRUPO TI") ||
-                normalized.includes("EQUIPE TI")
-            );
-        }
-
-        function getOperatorName(item) {
-            const candidates = [
-                item.operator,
-                item.simple?.operator,
-                item.complex?.operator,
-                item.assignee,
-                item.simple?.assignee,
-                item.complex?.assignee
-            ];
-
-            for (const opObj of candidates) {
-                const name = (opObj?.dynamicName || opObj?.name || "").trim();
-                if (!isGroupOrEmptyOperator(name)) return name;
-            }
-
-            return "-";
-        }
-
-        function getResponseList(data) {
-            if (Array.isArray(data)) return data;
-            if (data && Array.isArray(data.results)) return data.results;
-            return [];
-        }
-
-        function itemKey(item) {
-            return item.id || item.number || `${item.creationDate || item.callDate || item.registeredDate || ''}|${item.briefDescription || ''}`;
-        }
-
-        function dedupeItems(items) {
-            const seen = new Set();
-            return items.filter(item => {
-                const key = itemKey(item);
-                if (!key) return true;
-                if (seen.has(key)) return false;
-                seen.add(key);
-                return true;
-            });
-        }
-
-        async function fetchTopdeskPages(basePath) {
-            const allItems = [];
-            const seenPageKeys = new Set();
-            let page = 0;
-
-            while (page < SAFETY_MAX_PAGES) {
-                const start = page * PAGE_SIZE;
-                const separator = basePath.includes('?') ? '&' : '?';
-                const path = `${basePath}${separator}page_size=${PAGE_SIZE}&start=${start}`;
-                const res = await fetch('/api/topdesk?path=' + encodeURIComponent(path), { headers });
-
-                if (!res.ok) {
-                    console.error(`Erro na API Topdesk: ${basePath}. Status:`, res.status);
-                    break;
-                }
-
-                const data = await res.json();
-                const list = getResponseList(data);
-
-                if (list.length === 0) break;
-
-                // Proteção: se a API ignorar o start e repetir a mesma página, evita loop infinito.
-                const pageKey = list.map(itemKey).join('|');
-                if (seenPageKeys.has(pageKey)) {
-                    console.warn(`Página repetida detectada em ${basePath}. Encerrando paginação.`);
-                    break;
-                }
-                seenPageKeys.add(pageKey);
-
-                allItems.push(...list);
-
-                // Quando vem menos que PAGE_SIZE, chegamos na última página.
-                if (list.length < PAGE_SIZE) break;
-
-                page += 1;
-            }
-
-            if (page >= SAFETY_MAX_PAGES) {
-                console.warn(`Limite de segurança atingido em ${basePath}. Aumente SAFETY_MAX_PAGES se necessário.`);
-            }
-
-            return allItems;
         }
 
         function getStyles(status) {
@@ -811,18 +626,123 @@
             return { pill: 'pill-default', color: '#7f8c8d' };
         }
 
-        async function fetchData() {
-            if (isFetching) return;
-            isFetching = true;
+        function getStatusName(item) {
+            const isM = item.number && item.number.startsWith('M');
+            return isM ? (item.status?.name || "Novo") : (item.processingStatus?.name || "Novo");
+        }
 
+        function getItemKey(item) {
+            return item.number || item.id || item.unid || item.href || JSON.stringify(item);
+        }
+
+        function normalizeApiList(data) {
+            if (Array.isArray(data)) return data;
+            if (Array.isArray(data?.results)) return data.results;
+            if (Array.isArray(data?.data)) return data.data;
+            return [];
+        }
+
+        function isGenericOperatorName(name) {
+            const upper = normalizeText(name);
+
+            if (!upper) return true;
+            if (upper === "-" || upper === "TI" || upper === "T.I" || upper === "T.I.") return true;
+            if (upper === "TECNOLOGIA DA INFORMACAO") return true;
+            if (upper === "EQUIPE TI" || upper === "SUPORTE TI" || upper === "GRUPO TI") return true;
+            if (upper.includes("TECNOLOGIA DA INFORMACAO")) return true;
+
+            return false;
+        }
+
+        function getOperatorName(item) {
+            const opObj = item.operator || item.assignee || item.simple?.assignee || item.complex?.assignee;
+            const rawName = opObj?.dynamicName || opObj?.name || "";
+
+            if (isGenericOperatorName(rawName)) return "-";
+
+            return String(rawName).trim();
+        }
+
+        function getShortOperatorName(item) {
+            const opName = getOperatorName(item);
+            if (opName === "-") return "-";
+            return opName.split(" ")[0];
+        }
+
+        async function fetchTopdeskPath(path) {
+            const response = await fetch('/api/topdesk?path=' + encodeURIComponent(path), {
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) {
+                console.error("Erro na API TOPdesk:", response.status, path);
+                return [];
+            }
+
+            return await response.json();
+        }
+
+        async function fetchAllPages(resource) {
+            const allItems = [];
+            let start = 0;
+            let previousFirstKey = "";
+
+            for (let page = 0; page < SAFETY_MAX_PAGES; page++) {
+                const separator = resource.includes("?") ? "&" : "?";
+                const path = `${resource}${separator}page_size=${PAGE_SIZE}&start=${start}`;
+                const data = await fetchTopdeskPath(path);
+                const list = normalizeApiList(data);
+
+                if (!list.length) break;
+
+                const firstKey = getItemKey(list[0]);
+
+                if (page > 0 && firstKey && firstKey === previousFirstKey && list.length === PAGE_SIZE) {
+                    console.warn("Paginação repetida detectada. Interrompendo para evitar loop:", resource);
+                    break;
+                }
+
+                previousFirstKey = firstKey;
+                allItems.push(...list);
+
+                if (list.length < PAGE_SIZE) break;
+
+                start += PAGE_SIZE;
+            }
+
+            return allItems;
+        }
+
+        function deduplicateItems(items) {
+            const map = new Map();
+
+            items.forEach(item => {
+                const key = getItemKey(item);
+                if (!map.has(key)) map.set(key, item);
+            });
+
+            return Array.from(map.values());
+        }
+
+        function createDataHash(items) {
+            return JSON.stringify(items.map(item => ({
+                n: item.number || item.id || "",
+                s: getStatusName(item),
+                o: getOperatorName(item),
+                d: item.creationDate || item.callDate || item.registeredDate || "",
+                b: item.briefDescription || ""
+            })));
+        }
+
+        async function fetchData() {
             try {
-                const [incidents, operatorChanges] = await Promise.all([
-                    fetchTopdeskPages('incidents'),
-                    fetchTopdeskPages('operatorChanges')
+                const [incidents, changes] = await Promise.all([
+                    fetchAllPages('incidents'),
+                    fetchAllPages('operatorChanges')
                 ]);
 
-                const finalData = dedupeItems([...incidents, ...operatorChanges]);
-                const currentHash = JSON.stringify(finalData);
+                const finalData = deduplicateItems([...incidents, ...changes]);
+                const currentHash = createDataHash(finalData);
 
                 if (currentHash === lastDataHash) return;
 
@@ -830,16 +750,14 @@
                 render(finalData);
 
             } catch (e) {
-                console.error(e);
-            } finally {
-                isFetching = false;
+                console.error("Erro ao buscar dados:", e);
             }
         }
 
         function createCardHTML(item) {
             const isM = item.number && item.number.startsWith('M');
-            const idCompleto = item.number;
-            const statusName = isM ? (item.status?.name || "Novo") : (item.processingStatus?.name || "Novo");
+            const idCompleto = item.number || "-";
+            const statusName = getStatusName(item);
             const style = getStyles(statusName);
             const textoPill = isM ? `MUDANÇAS: ${statusName.toUpperCase()}` : statusName.toUpperCase();
 
@@ -866,15 +784,19 @@
                     timeString = `HÁ ${diffDays} DIA${diffDays > 1 ? 'S' : ''}`;
                 }
 
-                if (diffDays >= 7) { isCritical = true; timeClass = "time-critical"; }
-                else if (diffDays >= 4) { timeClass = "time-warning"; }
+                if (diffDays >= 7) {
+                    isCritical = true;
+                    timeClass = "time-critical";
+                } else if (diffDays >= 4) {
+                    timeClass = "time-warning";
+                }
             }
 
-            let animationClass = isCritical ? "critical-pulse" : (statusName.toLowerCase().includes('novo') ? "live-pulse" : "");
+            const animationClass = isCritical ? "critical-pulse" : (statusName.toLowerCase().includes('novo') ? "live-pulse" : "");
 
             return `
             <div class="card ${animationClass}" style="border-color: ${isCritical ? '#ef4444' : style.color}">
-                <div class="status-pill ${style.pill}">${textoPill}</div>
+                <div class="status-pill ${style.pill}">${escapeHTML(textoPill)}</div>
                 <div class="ticket-header">
                     <div class="ticket-id">${escapeHTML(idCompleto)}</div>
                     <div class="time-badge ${timeClass}">${escapeHTML(timeString)}</div>
@@ -900,28 +822,24 @@
             const listaRanking = document.getElementById('ranking-list');
 
             if (!lista || lista.length === 0) {
-                gridAtivos.innerHTML = "";
-                listaEspera.innerHTML = "";
-                listaRanking.innerHTML = `<div class="rank-item"><span class="rank-name" style="grid-column: 1 / -1; text-align: center;">Nenhum chamado encontrado.</span></div>`;
+                gridAtivos.innerHTML = `<div class="empty-state">Nenhum chamado ativo encontrado.</div>`;
+                listaEspera.innerHTML = `<div class="empty-state">Nenhum chamado em espera.</div>`;
+                listaRanking.innerHTML = `<div class="rank-item"><span class="rank-name" style="grid-column: 1 / -1; text-align: center;">Nenhum operador com chamados.</span></div>`;
                 return;
             }
 
-            // FILTRO GERAL: Esconde SOMENTE os fechados, resolvidos ou cancelados.
             const dadosLimpos = lista.filter(item => {
                 const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
                 if (s.includes('resolvido') || s.includes('fechado') || s.includes('fechada') || s.includes('cancelad')) return false;
                 return true;
             });
 
-            // ================= RANKING: SOMA TUDO (ATIVOS + ESPERA) =================
             const operadoresData = {};
 
             dadosLimpos.forEach(item => {
-                const opName = getOperatorName(item);
-
+                const opName = getShortOperatorName(item);
                 if (opName === "-") return;
 
-                let nomeCurto = opName.split(" ")[0];
                 const rawDate = item.creationDate || item.callDate || item.registeredDate;
                 let horasAberto = 0;
 
@@ -929,21 +847,22 @@
                     horasAberto = Math.max(0, new Date() - new Date(rawDate)) / (1000 * 60 * 60);
                 }
 
-                if (!operadoresData[nomeCurto]) {
-                    operadoresData[nomeCurto] = { nome: nomeCurto, totalTickets: 0, totalHoras: 0 };
+                if (!operadoresData[opName]) {
+                    operadoresData[opName] = { nome: opName, totalTickets: 0, totalHoras: 0 };
                 }
-                operadoresData[nomeCurto].totalTickets += 1;
-                operadoresData[nomeCurto].totalHoras += horasAberto;
+
+                operadoresData[opName].totalTickets += 1;
+                operadoresData[opName].totalHoras += horasAberto;
             });
 
             const rankingArray = Object.values(operadoresData).map(op => {
-                op.mediaHoras = op.totalHoras / op.totalTickets;
+                op.mediaHoras = op.totalTickets > 0 ? op.totalHoras / op.totalTickets : 0;
                 return op;
             }).sort((a, b) => b.mediaHoras - a.mediaHoras).slice(0, 5);
 
             if (rankingArray.length > 0) {
                 listaRanking.innerHTML = rankingArray.map((op, index) => {
-                    let mediaDisplay = op.mediaHoras < 24
+                    const mediaDisplay = op.mediaHoras < 24
                         ? `${Math.floor(op.mediaHoras)}h`
                         : `${Math.floor(op.mediaHoras / 24)} dias`;
 
@@ -951,7 +870,7 @@
                     <div class="rank-item">
                         <span class="rank-pos">${index + 1}º</span>
                         <span class="rank-name">${escapeHTML(op.nome)}</span>
-                        <span class="rank-tickets">${escapeHTML(op.totalTickets)}</span>
+                        <span class="rank-tickets">${op.totalTickets}</span>
                         <span class="rank-avg">${escapeHTML(mediaDisplay)}</span>
                     </div>
                 `;
@@ -959,9 +878,7 @@
             } else {
                 listaRanking.innerHTML = `<div class="rank-item"><span class="rank-name" style="grid-column: 1 / -1; text-align: center;">Nenhum operador com chamados.</span></div>`;
             }
-            // =================================================
 
-            // Separa para as Colunas
             const espera = dadosLimpos.filter(item => {
                 const s = (item.processingStatus?.name || item.status?.name || "").toLowerCase();
                 return s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor');
@@ -972,12 +889,17 @@
                 return !(s.includes('pausado') || s.includes('aguardando') || s.includes('fornecedor'));
             });
 
-            gridAtivos.innerHTML = ativos.map(i => createCardHTML(i)).join('');
+            gridAtivos.innerHTML = ativos.length
+                ? ativos.map(i => createCardHTML(i)).join('')
+                : `<div class="empty-state">Nenhum chamado ativo encontrado.</div>`;
 
-            const htmlEspera = espera.map(i => createCardHTML(i)).join('');
-            listaEspera.innerHTML = htmlEspera + htmlEspera;
+            const htmlEspera = espera.length
+                ? espera.map(i => createCardHTML(i)).join('')
+                : `<div class="empty-state">Nenhum chamado em espera.</div>`;
 
-            const duration = Math.max(20, espera.length * 4);
+            listaEspera.innerHTML = espera.length ? htmlEspera + htmlEspera : htmlEspera;
+
+            const duration = Math.max(22, espera.length * 4);
             listaEspera.style.animationDuration = `${duration}s`;
         }
 
@@ -992,23 +914,30 @@
         let scrollDir = 1;
         let isPaused = false;
         let scrollAccumulator = 0;
-        const speed = 0.45;
-        let gridAtivosEl = null;
+        const speed = 0.5;
 
         function smoothScroll() {
             if (!gridAtivosEl) gridAtivosEl = document.getElementById('grid-ativos');
 
             if (!isPaused && gridAtivosEl && gridAtivosEl.scrollHeight > gridAtivosEl.clientHeight) {
                 scrollAccumulator += speed;
-                if (scrollAccumulator >= 1) { gridAtivosEl.scrollTop += scrollDir; scrollAccumulator = 0; }
+
+                if (scrollAccumulator >= 1) {
+                    gridAtivosEl.scrollTop += scrollDir;
+                    scrollAccumulator = 0;
+                }
 
                 if (scrollDir === 1 && Math.ceil(gridAtivosEl.scrollTop + gridAtivosEl.clientHeight) >= gridAtivosEl.scrollHeight) {
-                    isPaused = true; scrollDir = -1; setTimeout(() => { isPaused = false; }, 2400);
-                }
-                else if (scrollDir === -1 && gridAtivosEl.scrollTop <= 0) {
-                    isPaused = true; scrollDir = 1; setTimeout(() => { isPaused = false; }, 2400);
+                    isPaused = true;
+                    scrollDir = -1;
+                    setTimeout(() => { isPaused = false; }, 2500);
+                } else if (scrollDir === -1 && gridAtivosEl.scrollTop <= 0) {
+                    isPaused = true;
+                    scrollDir = 1;
+                    setTimeout(() => { isPaused = false; }, 2500);
                 }
             }
+
             requestAnimationFrame(smoothScroll);
         }
 
